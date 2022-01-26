@@ -10,7 +10,7 @@ type Pet struct {
 	Name        string  `json:"name"`
 	Type        PetType `json:"petType"`
 	Weight      float32 `json:"weight"`
-	Diesieses   string  `json:"diesieses"`
+	Diseases   string  `json:"diseases"`
 	Owner       User
 	PetPhotoURL string `json:"petPhotoUrl"`
 }

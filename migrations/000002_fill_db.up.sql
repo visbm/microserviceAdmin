@@ -23,7 +23,7 @@ INSERT INTO SEAT (room_id, is_free, description) VALUES
 (2, true, 'Seat for sick pets'),
 (3, false, 'Regular seat');
 
-INSERT INTO PET (name , type, weignt, dieseses, user_id) VALUES 
+INSERT INTO PET (name , type, weignt, diseases, user_id) VALUES 
 ('Murzik','cat',5 ,'no dieses' ,1),
 ('Barbos','dog',5 ,'1 dieses' ,2),
 ('Aliy','dog',5 ,'2 dieses' ,3);

@@ -14,11 +14,11 @@ type PetRepository struct {
 // Create pet and save it to DB
 func (r *PetRepository) Create(p *model.Pet) (*model.Pet, error) {
 	if err := r.Store.Db.QueryRow(
-		"INSERT INTO pet (name, type, weight, dieseses, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id",
+		"INSERT INTO pet (name, type, weight, diseases, user_id) VALUES ($1, $2, $3, $4, $5) RETURNING id",
 		p.Name,
 		string(p.Type),
 		p.Weight,
-		p.Diesieses,
+		p.Diseases,
 		p.Owner.UserID,
 	).Scan(&p.PetID); err != nil {
 		log.Print(err)
@@ -42,7 +42,7 @@ func (r *PetRepository) GetAll() (*[]model.Pet, error) {
 			&pet.Name,
 			&pet.Type,
 			&pet.Weight,
-			&pet.Diesieses,
+			&pet.Diseases,
 			&pet.Owner.UserID,
 		)
 		if err != nil {
@@ -63,7 +63,7 @@ func (r *PetRepository) FindByID(id int) (*model.Pet, error) {
 		&pet.Name,
 		&pet.Type,
 		&pet.Weight,
-		&pet.Diesieses,
+		&pet.Diseases,
 		&pet.Owner.UserID,
 	); err != nil {
 		log.Printf(err.Error())
@@ -94,11 +94,11 @@ func (r *PetRepository) Delete(id int) error {
 func (r *PetRepository) Update(p *model.Pet) error {
 
 	result, err := r.Store.Db.Exec(
-		"UPDATE pet SET name = $1, type = $2, weight = $3, dieseses = $4, user_id = $5 WHERE id = $6",
+		"UPDATE pet SET name = $1, type = $2, weight = $3, diseases = $4, user_id = $5 WHERE id = $6",
 		p.Name,
 		string(p.Type),
 		p.Weight,
-		p.Diesieses,
+		p.Diseases,
 		p.Owner.UserID,
 		p.PetID,
 	)

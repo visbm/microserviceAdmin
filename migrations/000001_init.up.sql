@@ -8,13 +8,13 @@ CREATE TABLE IF NOT EXISTS USERS
     surname         CHARACTER VARYING(30) NOT NULL ,
     middle_name     CHARACTER VARYING(30) ,    
     email           CHARACTER VARYING(30) ,
-    password        TEXT ,
-    verified        BOOLEAN NOT NULL ,
-    sex             sex NOT NULL,
-    role            user_type NOT NULL ,
     date_of_birth   DATE NOT NULL ,
     address         TEXT NOT NULL ,
     phone           CHARACTER VARYING(30) NOT NULL ,
+    password        TEXT ,
+    role            user_type NOT NULL ,
+    verified        BOOLEAN NOT NULL ,
+    sex             sex NOT NULL,          
     photo           TEXT
 );
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS PET
     name         CHARACTER VARYING(30) NOT NULL ,
     type         CHARACTER VARYING(30) NOT NULL ,
     weignt       SMALLINT NOT NULL ,
-    dieseses       TEXT,
+    diseases       TEXT,
     user_id      INTEGER REFERENCES USERS(id) ON DELETE CASCADE NOT NULL 
 );
 

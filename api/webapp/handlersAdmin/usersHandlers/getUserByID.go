@@ -1,6 +1,7 @@
 package usershandlers
 
 import (
+	"fmt"
 	"microseviceAdmin/domain/model"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
@@ -53,7 +54,7 @@ func GetUserByID(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can not parse template: %v", err)
 			return
 		}
-
+		fmt.Println(users)
 		err = tmpl.Execute(w, users)
 		if err != nil {
 			http.Error(w, err.Error(), 400)

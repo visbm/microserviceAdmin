@@ -57,7 +57,7 @@ func TestPet() *Pet {
 		Name: "Name",
 		Type: PetTypeCat,
 		Weight: 1,
-		Diesieses: "Disease",
+		Diseases: "Disease",
 		Owner: *TestUser(),
 		PetPhotoURL: "/",
 	}

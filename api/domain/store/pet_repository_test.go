@@ -82,7 +82,7 @@ func TestPetRepository_Update(t *testing.T) {
 		p.Name = "Sharik"
 		p.Type = "dog"
 		p.Weight = 2
-		p.Diesieses = "Izjoga"
+		p.Diseases = "Izjoga"
 		p.PetPhotoURL = "/1/2/jpg"
 
 		err = s.Pet().Update(p)
