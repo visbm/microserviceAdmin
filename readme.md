@@ -1,0 +1,1 @@
+migrate -path ./migrations -database 'postgres://user:userpass@postgresql_database:5432/adminDB?sslmode=disable' force 1
