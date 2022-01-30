@@ -25,7 +25,7 @@ func AuthAdmin(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		id := user.UserID
+		userID := user.UserID
 		hashPassword := user.Password
 
 		isConfirmed := model.CheckPasswordHash(hashPassword, Password)
@@ -35,7 +35,23 @@ func AuthAdmin(s *store.Store) httprouter.Handle {
 			http.Redirect(w, r, "/admin/login", http.StatusFound)
 			return
 		}
-		session.AuthSession(w, r, id)
+
+		if user.Role != "employee" {
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("You are not employee")
+			http.Redirect(w, r, "/admin/login", http.StatusFound)
+			return
+		}
+
+		employee, err := s.Employee().FindByUserID(userID)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("Eror during getting employee. Err msg: %s", err.Error())
+			http.Redirect(w, r, "/admin/login", http.StatusFound)
+			return
+		}
+
+		session.AuthSession(w, r, employee)
 
 		http.Redirect(w, r, "/admin/home", http.StatusFound)
 

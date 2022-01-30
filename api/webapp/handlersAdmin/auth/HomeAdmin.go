@@ -17,7 +17,6 @@ func HomeAdmin(s *store.Store) httprouter.Handle {
 		exist := session.IsExist(w, r)
 		if exist {
 			HomePage(w, s)
-
 			return
 		}
 		s.Logger.Errorf("Unauthorized")

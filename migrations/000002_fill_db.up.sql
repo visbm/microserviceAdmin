@@ -29,9 +29,9 @@ INSERT INTO PET (name , type, weignt, diseases, user_id) VALUES
 ('Aliy','dog',5 ,'2 dieses' ,3);
 
 INSERT INTO EMPLOYEE (user_id, hotel_id, position ) VALUES 
-(4 , 1, 'Position 1' ),
-(5 , 2, 'Position 3' ),
-(6 , 3, 'Position 3' );
+(4 , 1, 'manager' ),
+(5 , 2, 'employee' ),
+(6 , 3, 'admin' );
 
 INSERT INTO BOOKING (seat_id , pet_id, employee_id, status, start_date, end_date, notes) VALUES 
 (1 ,1 ,1,'In processing', '2021-12-07', '2021-12-27','wash my pet pls twice a day'),

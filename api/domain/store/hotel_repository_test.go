@@ -38,7 +38,7 @@ func TestHotelRepository_FindByID(t *testing.T) {
 	s, teardown := store.TestStore(t, host, dbName, user, password, port, sslMode)
 	t.Cleanup(teardown)
 	t.Run("invalid id FindByID", func(t *testing.T) {
-		id := 2
+		id := -1
 		_, err := s.Hotel().FindByID(id)
 		assert.Error(t, err)
 	})
