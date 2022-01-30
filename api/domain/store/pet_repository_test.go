@@ -12,10 +12,10 @@ func TestPetRepository_Create(t *testing.T) {
 	s, teardown := store.TestStore(t, host, dbName, user, password, port, sslMode)
 	t.Cleanup(teardown)
 	t.Run("valid", func(t *testing.T) {
-		u, err := s.User().Create(model.TestUser())
+		u, _ := s.User().Create(model.TestUser())
 		p := model.TestPet()
 		p.Owner = *u
-		p, err = s.Pet().Create(p)
+		p, err := s.Pet().Create(p)
 		assert.NoError(t, err)
 		assert.NotNil(t, p)
 	})

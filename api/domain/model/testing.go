@@ -9,7 +9,7 @@ func TestUser() *User {
 	return &User{
 		Email:       "email@example.org",
 		Password:    "password",
-		Role:        ClientRole,
+		Role:        EmployeeRole,
 		Verified:    true,
 		Name:        "Name",
 		Surname:     "Surname",
@@ -44,11 +44,9 @@ func TestRoom() *Room {
 
 func TestEmployee() *Employee {
 	return &Employee{
-		EmployeeID: 1,
 		User:       *TestUser(),
 		Hotel:      *TestHotel(),
 		Position:   OwnerPosition,
-
 	}
 }
 

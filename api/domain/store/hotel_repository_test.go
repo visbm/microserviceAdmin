@@ -22,7 +22,7 @@ func TestHotelRepository_Delete(t *testing.T) {
 	s, teardown := store.TestStore(t, host, dbName, user, password, port, sslMode)
 	t.Cleanup(teardown)
 	t.Run("invalid id delete", func(t *testing.T) {
-		id := 2
+		id := -1
 		err := s.Hotel().Delete(id)
 		assert.Error(t, err)
 	})

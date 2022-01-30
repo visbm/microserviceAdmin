@@ -1,6 +1,7 @@
 package store
 
 import (
+	"errors"
 	"log"
 	"microseviceAdmin/domain/model"
 )
@@ -12,10 +13,7 @@ type EmployeeRepository struct {
 
 // Create employee and save it to DB
 func (r *EmployeeRepository) Create(e *model.Employee) (*model.Employee, error) {
-	if err := r.Store.Db.QueryRow(
-		"INSERT INTO employee",
-		"(user_id, hotel_id, position, role)",
-		"VALUES ($1, $2, $3, $4) RETURNING id",
+	if err := r.Store.Db.QueryRow("INSERT INTO employee (user_id, hotel_id, position) VALUES ($1, $2, $3) RETURNING id",
 		e.UserID,
 		e.Hotel.HotelID,
 		e.Position,
@@ -54,8 +52,7 @@ func (r *EmployeeRepository) GetAll() (*[]model.Employee, error) {
 // FindByID searchs and returns employee by ID
 func (r *EmployeeRepository) FindByID(id int) (*model.Employee, error) {
 	employee := &model.Employee{}
-	if err := r.Store.Db.QueryRow("SELECT * FROM employee WHERE id = $1",
-		id).Scan(
+	if err := r.Store.Db.QueryRow("SELECT * FROM employee WHERE id = $1", id).Scan(
 		&employee.EmployeeID,
 		&employee.UserID,
 		&employee.Hotel.HotelID,
@@ -74,6 +71,15 @@ func (r *EmployeeRepository) Delete(id int) error {
 		log.Printf(err.Error())
 		return err
 	}
+	rowsAffected, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected < 1 {
+		return errors.New("No rows affected")
+	}
+
 	log.Printf("Employee deleted, rows affectet: %d", result)
 	return nil
 }
@@ -99,7 +105,7 @@ func (r *EmployeeRepository) Update(e *model.Employee) error {
 }
 
 //FindByUserID find employee by user ID
-func (r *EmployeeRepository) FindByUserID(iserId int) (*model.Employee , error) {
+func (r *EmployeeRepository) FindByUserID(iserId int) (*model.Employee, error) {
 	employee := &model.Employee{}
 	if err := r.Store.Db.QueryRow("SELECT * FROM employee WHERE user_id = $1", iserId).Scan(
 		&employee.EmployeeID,
@@ -111,8 +117,5 @@ func (r *EmployeeRepository) FindByUserID(iserId int) (*model.Employee , error) 
 		return nil, err
 	}
 	return employee, nil
-
-
-
 
 }

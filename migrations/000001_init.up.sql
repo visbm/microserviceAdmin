@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS PET
 (   id           serial PRIMARY key ,
     name         CHARACTER VARYING(30) NOT NULL ,
     type         CHARACTER VARYING(30) NOT NULL ,
-    weignt       SMALLINT NOT NULL ,
+    weight       SMALLINT NOT NULL ,
     diseases       TEXT,
     user_id      INTEGER REFERENCES USERS(id) ON DELETE CASCADE NOT NULL 
 );
