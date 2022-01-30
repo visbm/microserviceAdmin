@@ -8,4 +8,4 @@
 `migrate -path ./migrations -database 'postgres://user:userpass@0.0.0.0:5432/adminDB?sslmode=disable' force 1 `
 
 4. add migr files
-`migrate create -ext sql -dir migrations -seq add_positions_for_employees `
+`migrate create -ext sql -dir migrations -seq add_positions_for_employees `gt
