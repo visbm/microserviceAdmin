@@ -18,6 +18,12 @@ func GetUserByID(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 		session.CheckSession(w, r)
+		err := session.CheckRigths(w, r)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
+			return
+		}
 
 		users := []model.User{}
 
