@@ -37,7 +37,7 @@ services:
             - '6543:5432'
         restart: unless-stopped
         volumes:
-            - test-database:/var/lib/test-data/data/
+            - test_microseviceAdmin:/var/lib/test-data/data/
         networks:
             new:
                 aliases:
@@ -125,7 +125,7 @@ networks:
     new:
         driver: bridge
 volumes: 
-    test-database: null
+    test_microseviceAdmin: null
     api: null
     database-data: null
     pgadmin: null
