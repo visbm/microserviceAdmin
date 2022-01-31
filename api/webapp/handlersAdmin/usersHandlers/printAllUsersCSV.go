@@ -1,7 +1,6 @@
 package usershandlers
 
 import (
-	"fmt"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/pkg/csv"
 	"microseviceAdmin/webapp/session"
@@ -21,7 +20,6 @@ func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		fmt.Println("form PrintAllUsersCSV  ")
 		err = s.Open()
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -43,7 +41,8 @@ func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		fmt.Println("form PrintAllUsersCSV  END ")
+		s.Logger.Info("Csv is created")
+		http.Redirect(w, r, "/admin/home", http.StatusFound)
 
 	}
 }

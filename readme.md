@@ -9,3 +9,6 @@
 
 4. add migr files
 `migrate create -ext sql -dir migrations -seq add_positions_for_employees `
+
+5. Copy file from container:
+`docker cp microserviceadmin-microseviceadmin-1:api/pkg/csv/pkgfile.csv files`  
