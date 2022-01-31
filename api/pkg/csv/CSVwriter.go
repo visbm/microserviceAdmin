@@ -1,34 +1,29 @@
 package csv
 
 import (
-	"encoding/csv"
+	"fmt"
 	"os"
+
+	"github.com/gocarina/gocsv"
 )
 
-func MakeCSV() error {
-	records := [][]string{
-		{"Name", "surname", "occupation"},
-		{"ffff", "ffff", "ffff"},
-		{"aaaa", "surname", "aaaa"},
-		{"John", "Doe", "gardener"},
-		{"Lucy", "Smith", "teacher"},
-		{"Brian", "Bethamy", "programmer"},
-	}
+//MakeCSV make csv file and write data
+func MakeCSV(data interface{}) error {
 
-	f, err := os.Create("users.csv")
-	defer f.Close()
+	file, err := os.Create("/api/pkg/csv/pkgfile.csv")
+	fmt.Println(file)
+	fmt.Println(file.Name())
+
 	if err != nil {
 		return err
 	}
+	defer file.Close()
 
-	w := csv.NewWriter(f)
-	defer w.Flush()
-
-	for _, record := range records {
-		if err := w.Write(record); err != nil {
-			return err
-		}
-
+	err = gocsv.MarshalFile(data, file)
+	if err != nil {
+		return err
 	}
+	fmt.Println("form MakeCSV  ")
 	return nil
+
 }

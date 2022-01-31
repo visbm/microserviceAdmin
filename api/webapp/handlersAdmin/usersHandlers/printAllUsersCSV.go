@@ -1,16 +1,17 @@
 package usershandlers
 
 import (
+	"fmt"
 	"microseviceAdmin/domain/store"
+	"microseviceAdmin/pkg/csv"
 	"microseviceAdmin/webapp/session"
 	"net/http"
-	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-// AllUsersHandler ...
-func AllUsersHandler(s *store.Store) httprouter.Handle {
+// PrintAllUsersCSV in csv file
+func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
 		err := session.CheckRigths(w, r)
@@ -20,6 +21,7 @@ func AllUsersHandler(s *store.Store) httprouter.Handle {
 			return
 		}
 
+		fmt.Println("form PrintAllUsersCSV  ")
 		err = s.Open()
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -34,23 +36,14 @@ func AllUsersHandler(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		files := []string{
-			"/api/webapp/tamplates/allUsers.html",
-			"/api/webapp/tamplates/base.html",
-		}
-
-		tmpl, err := template.ParseFiles(files...)
+		err = csv.MakeCSV(users)
 		if err != nil {
-			http.Error(w, err.Error(), 400)
-			s.Logger.Errorf("Can not parse template: %v", err)
+			http.Error(w, err.Error(), http.StatusNotFound)
+			s.Logger.Errorf("error writing record to csv:", err)
 			return
 		}
 
-		err = tmpl.Execute(w, users)
-		if err != nil {
-			http.Error(w, err.Error(), 400)
-			s.Logger.Errorf("Can not parse template: %v", err)
-			return
-		}
+		fmt.Println("form PrintAllUsersCSV  END ")
+
 	}
 }

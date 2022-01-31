@@ -17,6 +17,7 @@ require (
 
 require (
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
+	github.com/gocarina/gocsv v0.0.0-20211203214250-4735fba0c1d9
 	github.com/gorilla/sessions v1.2.1
 	github.com/joho/godotenv v1.4.0
 	github.com/julienschmidt/httprouter v1.3.0
