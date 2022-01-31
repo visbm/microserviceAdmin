@@ -80,9 +80,9 @@ services:
                 "up"
             ]
         links:
-            - test_database
+            - test_microseviceAdmin
         depends_on:
-            - test_database
+            - test_microseviceAdmin
 
     pgadmin:
         image: dpage/pgadmin4

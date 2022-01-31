@@ -1,6 +1,7 @@
 package usershandlers
 
 import (
+	"fmt"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
@@ -33,6 +34,8 @@ func AllUsersHandler(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't find users. Err msg: %v", err)
 			return
 		}
+
+		fmt.Println(users)
 
 		files := []string{
 			"/api/webapp/tamplates/allUsers.html",
