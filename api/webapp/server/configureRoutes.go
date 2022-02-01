@@ -21,8 +21,7 @@ func (s *Server) configureRoutes() {
 
 	s.router.Handle("GET", "/admin/home", auth.HomeAdmin(store.New(s.config)))
 
-
-	s.router.Handle("GET", "/admin/homeusers", usershandlers.HomeUsersHandler(store.New(s.config)))	
+	s.router.Handle("GET", "/admin/homeusers", usershandlers.HomeUsersHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users", usershandlers.AllUsersHandler(store.New(s.config)))
 	s.router.Handle("POST", "/admin/user/new", usershandlers.NewUser(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users/id/", usershandlers.GetUserByID(store.New(s.config)))
@@ -35,13 +34,12 @@ func (s *Server) configureRoutes() {
 
 	////////
 
-	s.router.Handle("GET", "/admin/upload", upload.UploadFileHandler(store.New(s.config)))
-
+	s.router.Handle("GET", "/admin/choose", upload.Choose(store.New(s.config)))
+	s.router.Handle("POST", "/admin/upload", upload.UploadFileHandler(store.New(s.config)))
 
 	s.router.Handle("GET", "/admin/homehotels", hotelhandlers.HomeHotelHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/hotels", hotelhandlers.AllHotelsHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/hotels/id", hotelhandlers.GetHotelByID(store.New(s.config)))
-
 
 	s.router.Handle("GET", "/admin/homepets", pethandlers.HomePetsHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/pets", pethandlers.AllPetsHandler(store.New(s.config)))

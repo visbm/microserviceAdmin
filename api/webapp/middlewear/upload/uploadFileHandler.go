@@ -2,7 +2,6 @@ package upload
 
 import (
 	"fmt"
-	"html/template"
 	"io/ioutil"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
@@ -46,11 +45,11 @@ func UploadFileHandler(s *store.Store) httprouter.Handle {
 			return
 		}*/
 
-		if r.Method == "GET" {
+		/*	if r.Method == "GET" {
 			t, _ := template.ParseFiles("/api/webapp/tamplates/upload.html")
 			t.Execute(w, nil)
 			return
-		}
+		}*/
 
 		if err := r.ParseMultipartForm(maxUploadSize); err != nil {
 			fmt.Printf("Could not parse multipart form: %v\n", err)
@@ -107,7 +106,8 @@ func UploadFileHandler(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Cant write file. Err msg:%v. ", err)
 			return
 		}
-		s.Logger.Errorf("File downloadet")
+
+		w.Write([]byte("SUCCESS"))
 	}
 
 }
