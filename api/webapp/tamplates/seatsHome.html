@@ -1,0 +1,29 @@
+{{template "base" .}}
+
+{{define "title"}}seats{{end}}
+
+{{define "main"}}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+<body>
+    <h2>Seats</h2>
+    <form action="/admin/seats">
+        <button>all seats</button>
+    </form>
+</body>
+
+<br><br>
+
+<form action="/admin/seats/id" method="GET">
+    <th>Get seat by id</th>
+    <input type="number" name="id" required><br><br>
+    <button>Get</button>
+</form>
+
+{{end}}

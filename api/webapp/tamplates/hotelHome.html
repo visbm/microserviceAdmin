@@ -1,0 +1,30 @@
+{{template "base" .}}
+
+{{define "title"}}Hotels{{end}}
+
+{{define "main"}}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+
+
+<body>
+    <h2>Hotels</h2>
+    <form action="/admin/hotels">
+        <button>all hotels</button>
+    </form>
+</body>
+
+<br><br>
+
+<form action="/admin/hotels/id/" method="GET">
+    <th>Get hotel by id</th>
+    <input type="number" name="id" required><br><br>
+    <button>Get</button>
+</form>
+
+{{end}}

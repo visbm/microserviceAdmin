@@ -24,7 +24,7 @@ func GetBookingByID(s *store.Store) httprouter.Handle {
 
 		bookings := []model.Booking{}
 
-		id, err := strconv.Atoi(ps.ByName("id"))
+		id, err := strconv.Atoi(r.FormValue("id"))
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, ps.ByName("id"))
