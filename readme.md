@@ -11,4 +11,7 @@
 `migrate create -ext sql -dir migrations -seq add_positions_for_employees `
 
 5. Copy file from container:
-`docker cp microserviceadmin-microseviceadmin-1:api/pkg/csv/pkgfile.csv files`  
+`docker cp microserviceadmin_microseviceadmin_1:api/pkg/csv/allusers.csv files`
+
+
+`docker cp microservices_microseviceadmin_1:api/pkg/csv/allusers.csv files`   - rabota

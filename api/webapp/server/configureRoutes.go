@@ -10,6 +10,7 @@ import (
 	roomhandlers "microseviceAdmin/webapp/handlersAdmin/roomHandlers"
 	seathandlers "microseviceAdmin/webapp/handlersAdmin/seatHandlers"
 	usershandlers "microseviceAdmin/webapp/handlersAdmin/usersHandlers"
+	"microseviceAdmin/webapp/middlewear/upload"
 	"net/http"
 )
 
@@ -20,12 +21,21 @@ func (s *Server) configureRoutes() {
 
 	s.router.Handle("GET", "/admin/home", auth.HomeAdmin(store.New(s.config)))
 
+
+	s.router.Handle("GET", "/admin/homeusers", usershandlers.HomeUsersHandler(store.New(s.config)))	
 	s.router.Handle("GET", "/admin/users", usershandlers.AllUsersHandler(store.New(s.config)))
 	s.router.Handle("POST", "/admin/user/new", usershandlers.NewUser(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users/id/", usershandlers.GetUserByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/users/delete/", usershandlers.DeleteUser(store.New(s.config)))
+
+	//s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config), download.DownloadFileHandler(store.New(s.config))))
+
 	s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config)))
-	
+	//s.router.Handler("GET", "/admin/users/download/",  download.DownloadFileHandler(store.New(s.config)))
+
+	////////
+
+	s.router.Handle("GET", "/admin/upload", upload.UploadFileHandler(store.New(s.config)))
 
 	s.router.Handle("GET", "/admin/hotels", hotelhandlers.AllHotelsHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/hotels/id:id", hotelhandlers.GetHotelByID(store.New(s.config)))
@@ -44,6 +54,8 @@ func (s *Server) configureRoutes() {
 
 	s.router.Handle("GET", "/admin/employees", employeehandlers.AllEmployeeHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/employees/id:id", employeehandlers.GetEmployeeByID(store.New(s.config)))
+
+	http.Handle("/files/", http.StripPrefix("/files/", http.FileServer(http.Dir("/api/pkg/csv/"))))
 
 	s.router.ServeFiles("/admin/templates/*filepath", http.Dir("templates"))
 }

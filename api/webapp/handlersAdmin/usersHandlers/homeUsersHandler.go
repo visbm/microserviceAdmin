@@ -1,17 +1,16 @@
 package usershandlers
 
 import (
-	"fmt"
 	"microseviceAdmin/domain/store"
-	"microseviceAdmin/pkg/csv"
 	"microseviceAdmin/webapp/session"
 	"net/http"
+	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-// PrintAllUsersCSV in csv file
-func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
+// HomeUsersHandler ...
+func HomeUsersHandler(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
 		err := session.CheckRigths(w, r)
@@ -34,22 +33,24 @@ func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't find users. Err msg: %v", err)
 			return
 		}
-		name := "allusers"
-		path, err := csv.MakeCSV(users, name)
+
+		files := []string{
+			"/api/webapp/tamplates/usersHome.html",
+			"/api/webapp/tamplates/base.html",
+		}
+
+		tmpl, err := template.ParseFiles(files...)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusNotFound)
-			s.Logger.Errorf("error writing record to csv:", err)
+			http.Error(w, err.Error(), 400)
+			s.Logger.Errorf("Can not parse template: %v", err)
 			return
 		}
 
-		s.Logger.Info("Csv is created")
-		s.Logger.Info("path:  ", path)
-
-		url := fmt.Sprint("/admin/users/download/", name, ".csv")
-		s.Logger.Info("url: ", url)
-
-		//http.Redirect(w, r.WithContext(context.WithValue(r.Context(), middlewear.CtxKeyFile, path)), url, http.StatusFound)
-		//next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(),middlewear.CtxKeyFile, path)))
-
+		err = tmpl.Execute(w, users)
+		if err != nil {
+			http.Error(w, err.Error(), 400)
+			s.Logger.Errorf("Can not parse template: %v", err)
+			return
+		}
 	}
 }

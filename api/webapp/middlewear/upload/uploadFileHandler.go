@@ -2,20 +2,22 @@ package upload
 
 import (
 	"fmt"
+	"html/template"
 	"io/ioutil"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
 	"os"
 	"path/filepath"
-	"text/template"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 const maxUploadSize = 2 * 1024 * 1024 // 2 mb
 const uploadPath = "./files"
 
-func UploadFileHandler(s *store.Store) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func UploadFileHandler(s *store.Store) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 		session.CheckSession(w, r)
 		err := session.CheckRigths(w, r)
@@ -24,7 +26,6 @@ func UploadFileHandler(s *store.Store) http.HandlerFunc {
 			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
 			return
 		}
-
 
 		/*files := []string{
 			"/api/webapp/tamplates/upload.html",
@@ -43,8 +44,7 @@ func UploadFileHandler(s *store.Store) http.HandlerFunc {
 			http.Error(w, err.Error(), 400)
 			s.Logger.Errorf("Can not parse template: %v", err)
 			return
-		}
-*/
+		}*/
 
 		if r.Method == "GET" {
 			t, _ := template.ParseFiles("/api/webapp/tamplates/upload.html")
@@ -87,9 +87,9 @@ func UploadFileHandler(s *store.Store) http.HandlerFunc {
 		}
 
 		// check file type, detectcontenttype only needs the first 512 bytes
-		detectedFileType := http.DetectContentType(fileBytes)		
+		detectedFileType := http.DetectContentType(fileBytes)
 		fileName := fileHeader.Filename
-		
+
 		newPath := filepath.Join(uploadPath, fileName)
 		fmt.Printf("FileType: %s, File: %s\n", detectedFileType, newPath)
 
@@ -97,16 +97,17 @@ func UploadFileHandler(s *store.Store) http.HandlerFunc {
 		newFile, err := os.Create(newPath)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Cant write fils. Err msg:%v. ", err)
+			s.Logger.Errorf("Cant write file. Err msg:%v. ", err)
 			return
 		}
 
 		defer newFile.Close() // idempotent, okay to call twice
 		if _, err := newFile.Write(fileBytes); err != nil || newFile.Close() != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Cant write fils. Err msg:%v. ", err)
+			s.Logger.Errorf("Cant write file. Err msg:%v. ", err)
 			return
 		}
 		s.Logger.Errorf("File downloadet")
-	})
+	}
+
 }
