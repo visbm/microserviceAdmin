@@ -1,0 +1,10 @@
+{{template "base" .}}
+
+{{define "title"}}Upload file{{end}}
+
+{{define "main"}}
+<form enctype="multipart/form-data" action="http://localhost:8080/admin/upload" method="post">
+    <input type="file" name="uploadFile" />
+    <input type="submit" value="upload" />
+</form>
+{{end}}

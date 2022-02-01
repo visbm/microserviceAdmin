@@ -43,6 +43,5 @@ func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 
 		s.Logger.Info("Csv is created")
 		http.Redirect(w, r, "/admin/home", http.StatusFound)
-
 	}
 }
