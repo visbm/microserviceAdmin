@@ -30,7 +30,7 @@
 <br><br>
 
 <body>
-    <form action="/admin/users/delete"  method="POST">
+    <form action="/admin/users/delete" method="POST">
         <th>Delete user by id</th>
         <input type="number" name="id" required><br><br>
         <button>Delete</button>
@@ -143,5 +143,12 @@
     </form>
 </body>
 
+<br><br>
+
+<form action="/users/upload" enctype="multipart/form-data" method="post">
+    <p><input type="file" name="file">
+        <input type="submit" value="sent">
+    </p>
+</form>
 
 {{end}}

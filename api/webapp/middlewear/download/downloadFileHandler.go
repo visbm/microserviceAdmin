@@ -4,6 +4,7 @@ import (
 	"io"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/middlewear"
+	"microseviceAdmin/webapp/session"
 	"net/http"
 	"os"
 	"strings"
@@ -12,6 +13,13 @@ import (
 func DownloadFileHandler(s *store.Store) http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
+		session.CheckSession(w, r)
+		err := session.CheckRigths(w, r)
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
+			return
+		}
 
 		path, err := middlewear.CtxFile(r.Context())
 		if err != nil {
