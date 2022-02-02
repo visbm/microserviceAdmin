@@ -35,6 +35,7 @@ func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 			return
 		}
 		name := "allusers"
+		
 		path, err := csv.MakeCSV(users, name)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
@@ -42,15 +43,15 @@ func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		s.Logger.Info("Csv is created")
-		s.Logger.Info("path:  ", path)
+		s.Logger.Info("Csv is created")		
 
-		url := fmt.Sprint("/admin/users/download/", name, ".csv")
+		url := fmt.Sprint("http://localhost:8080/admin/users/download/", name, ".csv")
 		s.Logger.Info("url: ", url)
+		
 
-		http.Redirect(w, r, "/admin/homeusers", http.StatusFound)
-		//http.Redirect(w, r.WithContext(context.WithValue(r.Context(), middlewear.CtxKeyFile, path)), url, http.StatusFound)
-		//next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(),middlewear.CtxKeyFile, path)))
+		http.ServeFile(w, r, path)
+
+		//http.Redirect(w, r, "/admin/homeusers", http.StatusFound)	
 
 	}
 }
