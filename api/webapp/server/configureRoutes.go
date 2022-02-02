@@ -10,6 +10,7 @@ import (
 	roomhandlers "microseviceAdmin/webapp/handlersAdmin/roomHandlers"
 	seathandlers "microseviceAdmin/webapp/handlersAdmin/seatHandlers"
 	usershandlers "microseviceAdmin/webapp/handlersAdmin/usersHandlers"
+	"microseviceAdmin/webapp/middlewear/upload"
 	"net/http"
 )
 
@@ -20,28 +21,47 @@ func (s *Server) configureRoutes() {
 
 	s.router.Handle("GET", "/admin/home", auth.HomeAdmin(store.New(s.config)))
 
+	s.router.Handle("GET", "/admin/homeusers", usershandlers.HomeUsersHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users", usershandlers.AllUsersHandler(store.New(s.config)))
 	s.router.Handle("POST", "/admin/user/new", usershandlers.NewUser(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users/id/", usershandlers.GetUserByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/users/delete/", usershandlers.DeleteUser(store.New(s.config)))
 
+	//s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config), download.DownloadFileHandler(store.New(s.config))))
+
+	s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config)))
+	//s.router.Handler("GET", "/admin/users/download/",  download.DownloadFileHandler(store.New(s.config)))
+
+	////////
+
+	s.router.Handle("GET", "/admin/choose", upload.Choose(store.New(s.config)))
+	s.router.Handle("POST", "/admin/upload", upload.UploadFileHandler(store.New(s.config)))
+
+	s.router.Handle("GET", "/admin/homehotels", hotelhandlers.HomeHotelHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/hotels", hotelhandlers.AllHotelsHandler(store.New(s.config)))
-	s.router.Handle("GET", "/admin/hotels/id:id", hotelhandlers.GetHotelByID(store.New(s.config)))
+	s.router.Handle("GET", "/admin/hotels/id", hotelhandlers.GetHotelByID(store.New(s.config)))
 
+	s.router.Handle("GET", "/admin/homepets", pethandlers.HomePetsHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/pets", pethandlers.AllPetsHandler(store.New(s.config)))
-	s.router.Handle("GET", "/admin/pets/id:id", pethandlers.GetPetByID(store.New(s.config)))
+	s.router.Handle("GET", "/admin/pets/id", pethandlers.GetPetByID(store.New(s.config)))
 
+	s.router.Handle("GET", "/admin/homerooms", roomhandlers.HomeRoomHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/rooms", roomhandlers.AllRoomsHandler(store.New(s.config)))
-	s.router.Handle("GET", "/admin/rooms/id:id", roomhandlers.GetRoomByID(store.New(s.config)))
+	s.router.Handle("GET", "/admin/rooms/id", roomhandlers.GetRoomByID(store.New(s.config)))
 
+	s.router.Handle("GET", "/admin/homeseats", seathandlers.HomeSeatsHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/seats", seathandlers.AllSeatsHandler(store.New(s.config)))
-	s.router.Handle("GET", "/admin/seats/id:id", seathandlers.GetSeatByID(store.New(s.config)))
+	s.router.Handle("GET", "/admin/seats/id", seathandlers.GetSeatByID(store.New(s.config)))
 
+	s.router.Handle("GET", "/admin/homebookings", bookinghandlers.HomeBookingHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/bookings", bookinghandlers.AllBookingsHandler(store.New(s.config)))
-	s.router.Handle("GET", "/admin/bookings/id:id", bookinghandlers.GetBookingByID(store.New(s.config)))
+	s.router.Handle("GET", "/admin/bookings/id", bookinghandlers.GetBookingByID(store.New(s.config)))
 
+	s.router.Handle("GET", "/admin/homeemployees", employeehandlers.HomeEmployeesHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/employees", employeehandlers.AllEmployeeHandler(store.New(s.config)))
-	s.router.Handle("GET", "/admin/employees/id:id", employeehandlers.GetEmployeeByID(store.New(s.config)))
+	s.router.Handle("GET", "/admin/employees/id", employeehandlers.GetEmployeeByID(store.New(s.config)))
+
+	http.Handle("/files/", http.StripPrefix("/files/", http.FileServer(http.Dir("/api/pkg/csv/"))))
 
 	s.router.ServeFiles("/admin/templates/*filepath", http.Dir("templates"))
 }

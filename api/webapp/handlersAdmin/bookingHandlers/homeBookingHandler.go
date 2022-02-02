@@ -1,34 +1,22 @@
-package hotelhandlers
+package bookinghandlers
 
 import (
-	"microseviceAdmin/domain/model"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
-	"strconv"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-// GetHotelByID ...
-func GetHotelByID(s *store.Store) httprouter.Handle {
+// HomeBookingHandler ...
+func HomeBookingHandler(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
 		err := session.CheckRigths(w, r)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
-			return
-		}
-
-		hotels := []model.Hotel{}
-
-
-		id, err := strconv.Atoi(r.FormValue("id"))
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, ps.ByName("id"))
 			return
 		}
 
@@ -39,17 +27,15 @@ func GetHotelByID(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		hotel, err := s.Hotel().FindByID(id)
+		users, err := s.User().GetAll()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
-			s.Logger.Errorf("Cant find hotel. Err msg:%v.", err)
+			s.Logger.Errorf("Can't find users. Err msg: %v", err)
 			return
 		}
 
-		hotels = append(hotels, *hotel)
-
 		files := []string{
-			"/api/webapp/tamplates/allHotels.html",
+			"/api/webapp/tamplates/bookingHome.html",
 			"/api/webapp/tamplates/base.html",
 		}
 
@@ -60,7 +46,7 @@ func GetHotelByID(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		err = tmpl.Execute(w, hotels)
+		err = tmpl.Execute(w, users)
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 			s.Logger.Errorf("Can not parse template: %v", err)
