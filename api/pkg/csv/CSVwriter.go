@@ -10,26 +10,28 @@ import (
 )
 
 //MakeCSV make csv file and write data
-func MakeCSV(data interface{}, name string) (string,error) {
+func MakeCSV(data interface{}, name string) (string, error) {
 
 	gocsv.SetCSVWriter(func(out io.Writer) *gocsv.SafeCSVWriter {
 		writer := csv.NewWriter(out)
-		writer.Comma = '\t'
+		writer.Comma = '-'
 		return gocsv.NewSafeCSVWriter(writer)
 	})
 
-	path := filepath.Join("/api/pkg/csv/" + name + ".csv")
+	path := filepath.Join("/api/pkg/csv/" + name)
 
-	file, err := os.Create(path)
+	file, err := os.Create(path)	
 
 	if err != nil {
-		return "" , err
+		return "", err
 	}
 	defer file.Close()
 
 	err = gocsv.MarshalFile(data, file)
 	if err != nil {
-		return "" ,err
+		return "", err
 	}
-	return path ,nil
+	return path, nil
+
+	
 }

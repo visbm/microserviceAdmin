@@ -1,4 +1,4 @@
-package usershandlers
+package pethandlers
 
 import (
 	"log"
@@ -11,7 +11,7 @@ import (
 )
 
 // DeleteUser ...
-func DeleteUser(s *store.Store) httprouter.Handle {
+func DeletePets(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 		session.CheckSession(w, r)
@@ -26,7 +26,7 @@ func DeleteUser(s *store.Store) httprouter.Handle {
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
-			http.Redirect(w, r, "/admin/homeusers", http.StatusFound)
+			http.Redirect(w, r, "/admin/homepets", http.StatusFound)
 			return
 		}
 		err = s.Open()
@@ -35,14 +35,14 @@ func DeleteUser(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't open DB. Err msg:%v.", err)
 			return
 		}
-		err = s.User().Delete(id)
+		err = s.Pet().Delete(id)
 		if err != nil {
 			log.Print(err)
-			s.Logger.Errorf("Can't delete user. Err msg:%v.", err)
+			s.Logger.Errorf("Can't delete pet. Err msg:%v.", err)
 			return
 		}
-		s.Logger.Info("Delete user with id = %d", id)
-		http.Redirect(w, r, "/admin/homeusers", http.StatusFound)
+		s.Logger.Info("Delete pet with id = %d", id)
+		http.Redirect(w, r, "/admin/homepets", http.StatusFound)
 
 	}
 }
