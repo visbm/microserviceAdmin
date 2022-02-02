@@ -10,6 +10,7 @@ import (
 	roomhandlers "microseviceAdmin/webapp/handlersAdmin/roomHandlers"
 	seathandlers "microseviceAdmin/webapp/handlersAdmin/seatHandlers"
 	usershandlers "microseviceAdmin/webapp/handlersAdmin/usersHandlers"
+	"microseviceAdmin/webapp/middlewear/download"
 	"microseviceAdmin/webapp/middlewear/upload"
 	"net/http"
 )
@@ -27,19 +28,17 @@ func (s *Server) configureRoutes() {
 	s.router.Handle("GET", "/admin/users/id/", usershandlers.GetUserByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/users/delete", usershandlers.DeleteUser(store.New(s.config)))
 
-	//s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config), download.DownloadFileHandler(store.New(s.config))))
+	s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config), download.DownloadFileHandler(store.New(s.config))))
 
-	s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config)))
+	//s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config)))
 	//s.router.Handler("GET", "/admin/users/download/",  download.DownloadFileHandler(store.New(s.config)))
-
-	////////
 
 	s.router.Handle("GET", "/admin/choose", upload.Choose(store.New(s.config)))
 	s.router.Handle("POST", "/admin/upload", upload.UploadFileHandler(store.New(s.config)))
 
 	s.router.Handle("GET", "/admin/homehotels", hotelhandlers.HomeHotelHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/hotels", hotelhandlers.AllHotelsHandler(store.New(s.config)))
-	s.router.Handle("GET", "/admin/hotels/id", hotelhandlers.GetHotelByID(store.New(s.config)))	
+	s.router.Handle("GET", "/admin/hotels/id", hotelhandlers.GetHotelByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/hotels/delete", hotelhandlers.DeleteHotels(store.New(s.config)))
 
 	s.router.Handle("GET", "/admin/homepets", pethandlers.HomePetsHandler(store.New(s.config)))
@@ -59,7 +58,7 @@ func (s *Server) configureRoutes() {
 
 	s.router.Handle("GET", "/admin/homebookings", bookinghandlers.HomeBookingHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/bookings", bookinghandlers.AllBookingsHandler(store.New(s.config)))
-	s.router.Handle("GET", "/admin/bookings/id", bookinghandlers.GetBookingByID(store.New(s.config)))	
+	s.router.Handle("GET", "/admin/bookings/id", bookinghandlers.GetBookingByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/bookings/delete", bookinghandlers.DeleteBooking(store.New(s.config)))
 
 	s.router.Handle("GET", "/admin/homeemployees", employeehandlers.HomeEmployeesHandler(store.New(s.config)))

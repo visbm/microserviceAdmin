@@ -1,9 +1,10 @@
 package usershandlers
 
 import (
-	"fmt"
+	"context"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/pkg/csv"
+	"microseviceAdmin/webapp/middlewear"
 	"microseviceAdmin/webapp/session"
 	"net/http"
 
@@ -11,7 +12,7 @@ import (
 )
 
 // PrintAllUsersCSV in csv file
-func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
+func PrintAllUsersCSV(s *store.Store, next http.Handler) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
 		err := session.CheckRigths(w, r)
@@ -34,8 +35,8 @@ func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't find users. Err msg: %v", err)
 			return
 		}
-		name := "allusers"
-		
+		name := "allusers.csv"
+
 		path, err := csv.MakeCSV(users, name)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
@@ -43,15 +44,20 @@ func PrintAllUsersCSV(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		s.Logger.Info("Csv is created")		
+		/*meta := map[string]float64{           // литерал карты
+			"name":  2.71828,
+			"path": 3.1416,
+		}
+		*/
 
-		url := fmt.Sprint("http://localhost:8080/admin/users/download/", name, ".csv")
-		s.Logger.Info("url: ", url)
-		
+		s.Logger.Info("path: ", path, "  name: ", name)
 
-		http.ServeFile(w, r, path)
+		//b, err := os.ReadFile(path)
+		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), middlewear.CtxKeyFile, path)))
 
-		//http.Redirect(w, r, "/admin/homeusers", http.StatusFound)	
+		//	http.ServeFile(w, r, path)
+
+		//	http.Redirect(w, r, "/admin/homeusers", http.StatusFound)
 
 	}
 }

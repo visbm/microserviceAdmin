@@ -18,9 +18,9 @@ func MakeCSV(data interface{}, name string) (string, error) {
 		return gocsv.NewSafeCSVWriter(writer)
 	})
 
-	path := filepath.Join("/api/pkg/csv/" + name + ".csv")
+	path := filepath.Join("/api/pkg/csv/" + name)
 
-	file, err := os.Create(path)
+	file, err := os.Create(path)	
 
 	if err != nil {
 		return "", err
@@ -32,4 +32,6 @@ func MakeCSV(data interface{}, name string) (string, error) {
 		return "", err
 	}
 	return path, nil
+
+	
 }
