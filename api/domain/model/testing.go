@@ -44,19 +44,19 @@ func TestRoom() *Room {
 
 func TestEmployee() *Employee {
 	return &Employee{
-		User:       *TestUser(),
-		Hotel:      *TestHotel(),
-		Position:   OwnerPosition,
+		User:     *TestUser(),
+		Hotel:    *TestHotel(),
+		Position: OwnerPosition,
 	}
 }
 
 func TestPet() *Pet {
 	return &Pet{
-		Name: "Name",
-		Type: PetTypeCat,
-		Weight: 1,
-		Diseases: "Disease",
-		Owner: *TestUser(),
+		Name:        "Name",
+		Type:        PetTypeCat,
+		Weight:      1,
+		Diseases:    "Disease",
+		Owner:       *TestUser(),
 		PetPhotoURL: "/",
 	}
 }
@@ -64,14 +64,19 @@ func TestPet() *Pet {
 func TestSeat() *Seat {
 	return &Seat{
 		Description: "Description of seat",
-		IsFree: "True",
-		
+		IsFree:      true,
+		Room:        *TestRoom(),
 	}
 }
 
-
-func TestBooking() *Booking{
+func TestBooking() *Booking {
 	return &Booking{
-		Seat: ,
+		Seat: *TestSeat(),
+		Pet: *TestPet(),
+		Employee: *TestEmployee(),
+		Status: BookingStatusInProgress,
+		StartDate: time.Time{}.AddDate(2000, 2, 2),
+		EndDate: time.Time{}.AddDate(2000, 22, 2),
+		Notes: "Notes",
 	}
 }

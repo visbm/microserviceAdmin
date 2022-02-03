@@ -110,7 +110,7 @@ func IsEmployeePosition(value interface{}) error {
 //	BookingStatusCancelled  BookingStatus = "cancelled"
 func IsBookingStatus(value interface{}) error {
 	s := value.(BookingStatus)
-	if s == BookingStatusPending || s == BookingStatusInProgress || s == BookingStatusCompleted || s == BookingStatusCancelled {
+	if s == "pending" || s == "in-progress" || s == "completed" || s == "cancelled" {
 		return nil
 	}
 	return errors.New("allowed Booking Status: 'BookingStatusPending', 'BookingStatusInProgress' ,'BookingStatusCompleted','BookingStatusCancelled'")

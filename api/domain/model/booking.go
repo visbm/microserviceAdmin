@@ -35,8 +35,8 @@ func (b *Booking) Validate() error {
 		validation.Field(&b.Seat, validation.Required),
 		validation.Field(&b.Pet, validation.Required),
 		validation.Field(&b.Employee, validation.Required),
-		validation.Field(&b.Status, validation.Required , validation.By(IsBookingStatus)),
-		validation.Field(&b.StartDate, validation.Required,validation.Date("2006-01-02")),
-		validation.Field(&b.EndDate, validation.Required, validation.Date("2006-01-02")),
+		validation.Field(&b.Status, validation.Required, validation.By(IsBookingStatus)),
+		validation.Field(&b.StartDate, validation.Required),
+		validation.Field(&b.EndDate, validation.Required),
 	)
 }
