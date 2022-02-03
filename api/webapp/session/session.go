@@ -36,6 +36,7 @@ func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employe
 	session.Values["EmployeeID"] = employee.EmployeeID
 	position := employee.PositionString()
 	session.Values["Position"] = position
+	session.Values["Employee_HotelID"] = employee.Hotel.HotelID
 
 	err = session.Save(r, w)
 	if err != nil {

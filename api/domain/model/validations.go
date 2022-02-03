@@ -88,13 +88,30 @@ func IsPetType(value interface{}) error {
 	return errors.New("allowed pet types: 'PetTypeCat', 'PetTypeDog'")
 }
 
-// IsPetType checks if string matchs to a Pet types of Pets
-// PetTypeCat = "cat"
-// PetTypeDog = "dog"
+
+
+// IsEmployeePosition checks if string matchs to a Employee Position
+//	ManagerPosition  Position = "manager"
+//	EmployeePosition Position = "employee"
+//	OwnerPosition    Position = "owner"
+//	AdminPosition    Position = "admin"
 func IsEmployeePosition(value interface{}) error {
 	s := value.(Position)
 	if s == ManagerPosition || s == EmployeePosition || s == OwnerPosition || s == AdminPosition {
 		return nil
 	}
-	return errors.New("allowed pet types: 'ManagerPosition', 'EmployeePosition' ,'OwnerPosition','AdminPosition'")
+	return errors.New("allowed Employee Position: 'ManagerPosition', 'EmployeePosition' ,'OwnerPosition','AdminPosition'")
+}
+
+// IsPetType checks if string matchs to a BookingStatus
+// BookingStatusPending    BookingStatus = "pending"
+//	BookingStatusInProgress BookingStatus = "in-progress"
+//	BookingStatusCompleted  BookingStatus = "completed"
+//	BookingStatusCancelled  BookingStatus = "cancelled"
+func IsBookingStatus(value interface{}) error {
+	s := value.(BookingStatus)
+	if s == BookingStatusPending || s == BookingStatusInProgress || s == BookingStatusCompleted || s == BookingStatusCancelled {
+		return nil
+	}
+	return errors.New("allowed Booking Status: 'BookingStatusPending', 'BookingStatusInProgress' ,'BookingStatusCompleted','BookingStatusCancelled'")
 }

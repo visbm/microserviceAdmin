@@ -60,3 +60,18 @@ func TestPet() *Pet {
 		PetPhotoURL: "/",
 	}
 }
+
+func TestSeat() *Seat {
+	return &Seat{
+		Description: "Description of seat",
+		IsFree: "True",
+		
+	}
+}
+
+
+func TestBooking() *Booking{
+	return &Booking{
+		Seat: ,
+	}
+}

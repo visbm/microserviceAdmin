@@ -44,20 +44,6 @@ func PrintAllUsersCSV(s *store.Store, next http.Handler) httprouter.Handle {
 			return
 		}
 
-		/*meta := map[string]float64{           // литерал карты
-			"name":  2.71828,
-			"path": 3.1416,
-		}
-		*/
-
-		s.Logger.Info("path: ", path, "  name: ", name)
-
-		//b, err := os.ReadFile(path)
-		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), middlewear.CtxKeyFile, path)))
-
-		//	http.ServeFile(w, r, path)
-
-		//	http.Redirect(w, r, "/admin/homeusers", http.StatusFound)
-
+		next.ServeHTTP(w, r.WithContext(context.WithValue(r.Context(), middlewear.CtxKeyFile, path)))		
 	}
 }

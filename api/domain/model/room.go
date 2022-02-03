@@ -15,6 +15,7 @@ type Room struct {
 
 // Validate ...
 func (r *Room) Validate() error {
+	
 	return validation.ValidateStruct(
 		r,
 		validation.Field(&r.RoomNumber, validation.Required, validation.Min(1), validation.Max(999999999999)),

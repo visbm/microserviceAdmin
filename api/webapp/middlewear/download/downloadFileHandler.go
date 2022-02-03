@@ -39,7 +39,7 @@ func DownloadFileHandler(s *store.Store) http.HandlerFunc {
 		name := arr[len(arr)-1]
 
 		w.Header().Set("Accept-ranges", "bytes")
-		w.Header().Set("Content-Type", "application/octet-stream")
+		w.Header().Set("Content-Type", "text/csv")
 		w.Header().Set("Content-Disposition", "attachment; filename="+name+"")
 		w.WriteHeader(http.StatusOK)
 
@@ -49,5 +49,7 @@ func DownloadFileHandler(s *store.Store) http.HandlerFunc {
 			s.Logger.Errorf("Cannot send file: %v", err)
 			return
 		}
+
+		s.Logger.Info("File sent")
 	}
 }
