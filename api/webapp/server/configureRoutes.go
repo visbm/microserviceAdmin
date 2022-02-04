@@ -24,11 +24,12 @@ func (s *Server) configureRoutes() {
 
 	s.router.Handle("GET", "/admin/homeusers", usershandlers.HomeUsersHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users", usershandlers.AllUsersHandler(store.New(s.config)))
-	s.router.Handle("POST", "/admin/users/new", usershandlers.NewUser(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users/id/", usershandlers.GetUserByID(store.New(s.config)))
-	s.router.Handle("POST", "/admin/users/delete", usershandlers.DeleteUser(store.New(s.config)))
-	s.router.Handle("POST", "/admin/users/update", usershandlers.UpdateUser(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config), download.DownloadFileHandler(store.New(s.config))))
+	s.router.Handle("POST", "/admin/users/delete", usershandlers.DeleteUser(store.New(s.config)))
+	s.router.Handle("POST", "/admin/users/update", usershandlers.UpdateUser(store.New(s.config)))	
+	s.router.Handle("POST", "/admin/users/new", usershandlers.NewUser(store.New(s.config)))
+	
 
 	s.router.Handle("POST", "/users/upload", upload.UploadFile(store.New(s.config)))
 
