@@ -7,6 +7,7 @@ import (
 // TestUser ...
 func TestUser() *User {
 	return &User{
+		UserID: 1,
 		Email:       "email@example.org",
 		Password:    "password",
 		Role:        EmployeeRole,
@@ -52,6 +53,7 @@ func TestEmployee() *Employee {
 
 func TestPet() *Pet {
 	return &Pet{
+		PetID: 1,
 		Name:        "Name",
 		Type:        PetTypeCat,
 		Weight:      1,
@@ -63,6 +65,7 @@ func TestPet() *Pet {
 
 func TestSeat() *Seat {
 	return &Seat{
+		SeatID: 1,
 		Description: "Description of seat",
 		IsFree:      true,
 		Room:        *TestRoom(),
@@ -71,6 +74,7 @@ func TestSeat() *Seat {
 
 func TestBooking() *Booking {
 	return &Booking{
+		BookingID: 1,
 		Seat: *TestSeat(),
 		Pet: *TestPet(),
 		Employee: *TestEmployee(),
