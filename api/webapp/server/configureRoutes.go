@@ -24,17 +24,14 @@ func (s *Server) configureRoutes() {
 
 	s.router.Handle("GET", "/admin/homeusers", usershandlers.HomeUsersHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users", usershandlers.AllUsersHandler(store.New(s.config)))
-	s.router.Handle("POST", "/admin/user/new", usershandlers.NewUser(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users/id/", usershandlers.GetUserByID(store.New(s.config)))
-	s.router.Handle("POST", "/admin/users/delete", usershandlers.DeleteUser(store.New(s.config)))
-
 	s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config), download.DownloadFileHandler(store.New(s.config))))
+	s.router.Handle("POST", "/admin/users/delete", usershandlers.DeleteUser(store.New(s.config)))
+	s.router.Handle("POST", "/admin/users/update", usershandlers.UpdateUser(store.New(s.config)))	
+	s.router.Handle("POST", "/admin/users/new", usershandlers.NewUser(store.New(s.config)))
+	
 
-	//s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config)))
-	//s.router.Handler("GET", "/admin/users/download/",  download.DownloadFileHandler(store.New(s.config)))
-
-	s.router.Handle("GET", "/admin/choose", upload.Choose(store.New(s.config)))
-	s.router.Handle("POST", "/admin/upload", upload.UploadFileHandler(store.New(s.config)))
+	s.router.Handle("POST", "/users/upload", upload.UploadFile(store.New(s.config)))
 
 	s.router.Handle("GET", "/admin/homehotels", hotelhandlers.HomeHotelHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/hotels", hotelhandlers.AllHotelsHandler(store.New(s.config)))
@@ -60,13 +57,12 @@ func (s *Server) configureRoutes() {
 	s.router.Handle("GET", "/admin/bookings", bookinghandlers.AllBookingsHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/bookings/id", bookinghandlers.GetBookingByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/bookings/delete", bookinghandlers.DeleteBooking(store.New(s.config)))
+	s.router.Handle("POST", "/admin/bookings/new", bookinghandlers.NewBooking(store.New(s.config)))
 
 	s.router.Handle("GET", "/admin/homeemployees", employeehandlers.HomeEmployeesHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/employees", employeehandlers.AllEmployeeHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/employees/id", employeehandlers.GetEmployeeByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/employees/delete", employeehandlers.DeleteEmployee(store.New(s.config)))
 
-	http.Handle("/files/", http.StripPrefix("/files/", http.FileServer(http.Dir("/api/pkg/csv/"))))
-
-	s.router.ServeFiles("/admin/templates/*filepath", http.Dir("templates"))
+	s.router.ServeFiles("/templates/*filepath", http.Dir("templates"))
 }

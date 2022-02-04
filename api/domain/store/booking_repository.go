@@ -13,9 +13,7 @@ type BookingRepository struct {
 // Create booking and save it to DB
 func (r *BookingRepository) Create(b *model.Booking) (*model.Booking, error) {
 	if err := r.Store.Db.QueryRow(
-		"INSERT INTO booking",
-		"(seat_id, pet_id, employee_id, status, start_date, end_date, notes)",
-		"VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
+		"INSERT INTO booking (seat_id, pet_id, employee_id, status, start_date, end_date, notes) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id",
 		b.Seat.SeatID,
 		b.Pet.PetID,
 		b.Employee.EmployeeID,
@@ -95,8 +93,7 @@ func (r *BookingRepository) Update(b *model.Booking) error {
 
 	result, err := r.Store.Db.Exec(
 		"UPDATE booking SET",
-		"seat_id = $1, pet_id = $2, employee_id = $3, status = $4, start_date = $5, end_date = $6, notes = $7",
-		"WHERE id = $8",
+		"seat_id = $1, pet_id = $2, employee_id = $3, status = $4, start_date = $5, end_date = $6, notes = $7 WHERE id = $8",
 		b.Seat.SeatID,
 		b.Pet.PetID,
 		b.Employee.EmployeeID,

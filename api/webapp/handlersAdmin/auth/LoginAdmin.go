@@ -24,6 +24,7 @@ func LoginAdmin(s *store.Store) httprouter.Handle {
 			"/api/webapp/tamplates/loginAdmin.html",
 			"/api/webapp/tamplates/base.html",
 		}
+
 		tmpl, err := template.ParseFiles(files...)
 		if err != nil {
 			http.Error(w, err.Error(), 400)
