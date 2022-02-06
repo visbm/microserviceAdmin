@@ -200,3 +200,45 @@ PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adm
 [31mERRO[0m[2022-02-03T15:03:48+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
 [31mERRO[0m[2022-02-03T15:03:49+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
 [31mERRO[0m[2022-02-03T15:03:49+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
+[36mINFO[0m[2022-02-04T21:14:24+03:00]server.go:32 microseviceAdmin/webapp/server.(*Server).Start Admin router started successfully            
+[36mINFO[0m[2022-02-04T21:14:24+03:00]server.go:32 microseviceAdmin/webapp/server.(*Server).Start Admin router started successfully            
+[36mINFO[0m[2022-02-04T21:14:24+03:00]server.go:38 microseviceAdmin/webapp/server.(*Server).Start Store started successfully                   
+[36mINFO[0m[2022-02-04T21:14:24+03:00]server.go:38 microseviceAdmin/webapp/server.(*Server).Start Store started successfully                   
+[36mINFO[0m[2022-02-04T21:14:24+03:00]server.go:40 microseviceAdmin/webapp/server.(*Server).Start Server starts at Server Address: localhost:9090
+PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adminDB sslmode=disable" ... 
+[36mINFO[0m[2022-02-04T21:14:24+03:00]server.go:40 microseviceAdmin/webapp/server.(*Server).Start Server starts at Server Address: localhost:9090
+PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adminDB sslmode=disable" ... 
+[31mERRO[0m[2022-02-04T21:14:44+03:00]HomeAdmin.go:22 microseviceAdmin/webapp/handlersAdmin/auth.HomeAdmin.func1 Unauthorized                                 
+[31mERRO[0m[2022-02-04T21:14:44+03:00]HomeAdmin.go:22 microseviceAdmin/webapp/handlersAdmin/auth.HomeAdmin.func1 Unauthorized                                 
+[31mERRO[0m[2022-02-04T21:14:44+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /api/webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
+[31mERRO[0m[2022-02-04T21:14:44+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /api/webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
+[31mERRO[0m[2022-02-04T21:16:48+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /api/webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
+[31mERRO[0m[2022-02-04T21:16:48+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /api/webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
+[36mINFO[0m[2022-02-04T21:21:05+03:00]server.go:32 microseviceAdmin/webapp/server.(*Server).Start Admin router started successfully            
+[36mINFO[0m[2022-02-04T21:21:05+03:00]server.go:32 microseviceAdmin/webapp/server.(*Server).Start Admin router started successfully            
+[36mINFO[0m[2022-02-04T21:21:05+03:00]server.go:38 microseviceAdmin/webapp/server.(*Server).Start Store started successfully                   
+[36mINFO[0m[2022-02-04T21:21:05+03:00]server.go:38 microseviceAdmin/webapp/server.(*Server).Start Store started successfully                   
+[36mINFO[0m[2022-02-04T21:21:05+03:00]server.go:40 microseviceAdmin/webapp/server.(*Server).Start Server starts at Server Address: localhost:9090
+PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adminDB sslmode=disable" ... 
+[36mINFO[0m[2022-02-04T21:21:05+03:00]server.go:40 microseviceAdmin/webapp/server.(*Server).Start Server starts at Server Address: localhost:9090
+PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adminDB sslmode=disable" ... 
+[31mERRO[0m[2022-02-04T21:21:10+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /api/webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
+[31mERRO[0m[2022-02-04T21:21:10+03:00]LoginAdmin.go:31 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: open /api/webapp/tamplates/loginAdmin.html: The system cannot find the path specified. 
+[36mINFO[0m[2022-02-04T21:21:50+03:00]server.go:32 microseviceAdmin/webapp/server.(*Server).Start Admin router started successfully            
+[36mINFO[0m[2022-02-04T21:21:50+03:00]server.go:32 microseviceAdmin/webapp/server.(*Server).Start Admin router started successfully            
+[36mINFO[0m[2022-02-04T21:21:50+03:00]server.go:38 microseviceAdmin/webapp/server.(*Server).Start Store started successfully                   
+[36mINFO[0m[2022-02-04T21:21:50+03:00]server.go:38 microseviceAdmin/webapp/server.(*Server).Start Store started successfully                   
+[36mINFO[0m[2022-02-04T21:21:50+03:00]server.go:40 microseviceAdmin/webapp/server.(*Server).Start Server starts at Server Address: localhost:9090
+PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adminDB sslmode=disable" ... 
+[36mINFO[0m[2022-02-04T21:21:50+03:00]server.go:40 microseviceAdmin/webapp/server.(*Server).Start Server starts at Server Address: localhost:9090
+PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adminDB sslmode=disable" ... 
+[31mERRO[0m[2022-02-04T21:21:52+03:00]LoginAdmin.go:37 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: html/template:loginAdmin.html:1:11: no such template "base" 
+[31mERRO[0m[2022-02-04T21:21:52+03:00]LoginAdmin.go:37 microseviceAdmin/webapp/handlersAdmin/auth.LoginAdmin.func1 Can not parse template: html/template:loginAdmin.html:1:11: no such template "base" 
+[36mINFO[0m[2022-02-04T21:23:57+03:00]server.go:32 microseviceAdmin/webapp/server.(*Server).Start Admin router started successfully            
+[36mINFO[0m[2022-02-04T21:23:57+03:00]server.go:32 microseviceAdmin/webapp/server.(*Server).Start Admin router started successfully            
+[36mINFO[0m[2022-02-04T21:23:57+03:00]server.go:38 microseviceAdmin/webapp/server.(*Server).Start Store started successfully                   
+[36mINFO[0m[2022-02-04T21:23:57+03:00]server.go:38 microseviceAdmin/webapp/server.(*Server).Start Store started successfully                   
+[36mINFO[0m[2022-02-04T21:23:57+03:00]server.go:40 microseviceAdmin/webapp/server.(*Server).Start Server starts at Server Address: localhost:9090
+PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adminDB sslmode=disable" ... 
+[36mINFO[0m[2022-02-04T21:23:57+03:00]server.go:40 microseviceAdmin/webapp/server.(*Server).Start Server starts at Server Address: localhost:9090
+PG Data Source: "host=localhost port=8081 user=user password=userpass dbname=adminDB sslmode=disable" ... 
