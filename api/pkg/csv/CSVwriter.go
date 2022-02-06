@@ -14,7 +14,7 @@ func MakeCSV(data interface{}, name string) (string, error) {
 
 	gocsv.SetCSVWriter(func(out io.Writer) *gocsv.SafeCSVWriter {
 		writer := csv.NewWriter(out)
-		writer.Comma = '-'
+		writer.Comma = ','
 		return gocsv.NewSafeCSVWriter(writer)
 	})
 
