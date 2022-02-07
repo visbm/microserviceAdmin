@@ -9,3 +9,17 @@ type Permission struct {
 
 var DefaultPermissoins []Permission = []Permission{{0, "read_user ", "Read user"},
 	{0, "read_hotel", "Read hotel"}}
+
+func (per *[]Permission) find(name string) bool {
+
+	for i := 0; i < len(per); i++ {
+		
+	}
+
+	for _ , i := range per{
+		if i.Name == name{
+			return true
+		}
+	}
+	
+}
