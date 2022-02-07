@@ -20,6 +20,8 @@ type Store struct {
 	PetRepository      *PetRepository
 	BookingRepository  *BookingRepository
 	ImageRepository    *ImageRepository
+	PermissionsRepository *PermissionsRepository
+	PermissionsEmployeeRepository * PermissionsEmployeeRepository
 	Logger             *logger.Logger
 }
 
@@ -133,6 +135,30 @@ func (s *Store) Booking() *BookingRepository {
 	}
 	return s.BookingRepository
 }
+
+// Permossins ...
+func (s *Store) Permossions() *PermissionsRepository {
+	if s.PermissionsRepository != nil {
+		return s.PermissionsRepository
+	}
+	s.PermissionsRepository = &PermissionsRepository{
+		Store: s,
+	}
+	return s.PermissionsRepository
+}
+
+func (s *Store) PermissionsEmployee() *PermissionsEmployeeRepository {
+	if s.PermissionsEmployeeRepository != nil {
+		return s.PermissionsEmployeeRepository
+	}
+	s.PermissionsEmployeeRepository = &PermissionsEmployeeRepository{
+		Store: s,
+	}
+	return s.PermissionsEmployeeRepository
+}
+
+
+
 
 // Image ...
 func (s *Store) Image() *ImageRepository {

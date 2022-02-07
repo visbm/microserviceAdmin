@@ -6,6 +6,7 @@ import (
 	bookinghandlers "microseviceAdmin/webapp/handlersAdmin/bookingHandlers"
 	employeehandlers "microseviceAdmin/webapp/handlersAdmin/employeeHandlers"
 	hotelhandlers "microseviceAdmin/webapp/handlersAdmin/hotelHandlers"
+	"microseviceAdmin/webapp/handlersAdmin/permission"
 	pethandlers "microseviceAdmin/webapp/handlersAdmin/petHandlers"
 	roomhandlers "microseviceAdmin/webapp/handlersAdmin/roomHandlers"
 	seathandlers "microseviceAdmin/webapp/handlersAdmin/seatHandlers"
@@ -27,9 +28,8 @@ func (s *Server) configureRoutes() {
 	s.router.Handle("GET", "/admin/users/id/", usershandlers.GetUserByID(store.New(s.config)))
 	s.router.Handle("GET", "/admin/users/csv/", usershandlers.PrintAllUsersCSV(store.New(s.config), download.DownloadFileHandler(store.New(s.config))))
 	s.router.Handle("POST", "/admin/users/delete", usershandlers.DeleteUser(store.New(s.config)))
-	s.router.Handle("POST", "/admin/users/update", usershandlers.UpdateUser(store.New(s.config)))	
+	s.router.Handle("POST", "/admin/users/update", usershandlers.UpdateUser(store.New(s.config)))
 	s.router.Handle("POST", "/admin/users/new", usershandlers.NewUser(store.New(s.config)))
-	
 
 	s.router.Handle("POST", "/users/upload", upload.UploadFile(store.New(s.config)))
 
@@ -63,6 +63,8 @@ func (s *Server) configureRoutes() {
 	s.router.Handle("GET", "/admin/employees", employeehandlers.AllEmployeeHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/employees/id", employeehandlers.GetEmployeeByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/employees/delete", employeehandlers.DeleteEmployee(store.New(s.config)))
+
+	s.router.Handle("get", "/admin/permissions", permission.AllPermissons(store.New(s.config)))
 
 	s.router.ServeFiles("/templates/*filepath", http.Dir("templates"))
 }
