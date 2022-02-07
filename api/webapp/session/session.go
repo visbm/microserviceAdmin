@@ -27,7 +27,7 @@ func CheckSession(w http.ResponseWriter, r *http.Request) {
 }
 
 // AuthSession ...
-func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employee) {
+func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employee, permissions []model.Permission) {
 	session, err := store.Get(r, "session")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -37,6 +37,7 @@ func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employe
 	position := employee.PositionString()
 	session.Values["Position"] = position
 	session.Values["Employee_HotelID"] = employee.Hotel.HotelID
+	session.Values["Permissions"] = permissions
 
 	err = session.Save(r, w)
 	if err != nil {

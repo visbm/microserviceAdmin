@@ -81,6 +81,7 @@ func (r *PermissionsRepository) Delete(id int) error {
 	return nil
 }
 
+// GetByEmployeeId return []permissions with employee ID id
 func (r *PermissionsRepository) GetByEmployeeId(id int) (*[]model.Permission, error) {
 	rows, err := r.Store.Db.Query("SELECT * FROM PERMISSiONS WHERE id IN ( SELECT permissions_id FROM permissions_employees where employee_id = $1 )" , id)
 	if err != nil {
