@@ -15,7 +15,7 @@ import (
 func main() {
 	// Need this part? If we have .env in docker-compose.yaml
 	//err := godotenv.Load(filepath.Join("../", "work.env"))
-	err := godotenv.Load(filepath.Join("", "../.env"))
+	err := godotenv.Load(filepath.Join("../", ".env"))
 	if err != nil {
 		log.Printf("Error loading .env file. %s", err.Error())
 	}

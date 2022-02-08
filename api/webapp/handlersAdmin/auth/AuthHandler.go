@@ -50,12 +50,8 @@ func AuthAdmin(s *store.Store) httprouter.Handle {
 			http.Redirect(w, r, "/admin/login", http.StatusFound)
 			return
 		}
-		permissions := []model.Permission{}
-		if employee.Position == "employee" {
-			permissions = model.DefaultPermissoins
-		}
-
-		session.AuthSession(w, r, employee, permissions)
+		
+		session.AuthSession(w, r, employee)
 
 		http.Redirect(w, r, "/admin/home", http.StatusFound)
 
