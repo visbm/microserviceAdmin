@@ -4,6 +4,7 @@ import (
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp"
 	"microseviceAdmin/webapp/logger"
+	"microseviceAdmin/webapp/session"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
@@ -29,7 +30,14 @@ func New(config *webapp.Config) *Server {
 func (s *Server) Start() error {
 
 	s.configureRoutes()
-	s.logger.Info("Admin router started successfully")	
+	s.logger.Info("Admin router started successfully")
+
+	err := session.OpenSessionStore(s.config)
+	if err !=nil{
+		s.logger.Errorf("Error while open sessions store. ERR MSG: %s", err.Error())
+		return err
+	}
+	s.logger.Info("Session store started successfully")
 
 	if err := s.configureStore(); err != nil {
 		s.logger.Errorf("Error while configure store. ERR MSG: %s", err.Error())

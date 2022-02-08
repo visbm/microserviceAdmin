@@ -4,28 +4,14 @@ import (
 	"fmt"
 	"microseviceAdmin/domain/model"
 	"net/http"
-	"os"
 	"time"
-
-	"github.com/antonlindstrom/pgstore"
 )
-
-//var store = sessions.NewCookieStore([]byte(os.Getenv("SESSION_KEY")))
-//var sessionRepository = store.New(s.config)
-//var config = &webapp.Config{}
-//config.NewConfig()
-
-//var db, _ = webapp.ConnectDb()
-//var PGStore, _ = pgstore.NewPGStoreFromPool(db, []byte(os.Getenv("SESSION_KEY")))
-//var STORE = store.New(s.config)
-
-var PGStore, _ = pgstore.NewPGStore("postgres://user:userpass@postgresql_database:5432/adminDB?sslmode=disable", []byte(os.Getenv("SESSION_KEY")))
 
 // CheckSession ...
 func CheckSession(w http.ResponseWriter, r *http.Request) {
-	defer PGStore.StopCleanup(PGStore.Cleanup(time.Minute * 5))
+	defer sstore.PGStore.StopCleanup(sstore.PGStore.Cleanup(time.Minute * 5))
 
-	session, err := PGStore.Get(r, "session-key")
+	session, err := sstore.PGStore.Get(r, "session-key")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -40,7 +26,7 @@ func CheckSession(w http.ResponseWriter, r *http.Request) {
 // AuthSession ...
 func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employee) {
 
-	session, err := PGStore.Get(r, "session-key")
+	session, err := sstore.PGStore.Get(r, "session-key")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -61,7 +47,7 @@ func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employe
 
 // Logout ...
 func Logout(w http.ResponseWriter, r *http.Request) {
-	session, err := PGStore.Get(r, "session-key")
+	session, err := sstore.PGStore.Get(r, "session-key")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -77,7 +63,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 // IsExist ...
 func IsExist(w http.ResponseWriter, r *http.Request) bool {
-	session, _ := PGStore.Get(r, "session")
+	session, _ := sstore.PGStore.Get(r, "session")
 	_, ok := session.Values["EmployeeID"]
 	return ok
 }
@@ -86,7 +72,7 @@ func IsExist(w http.ResponseWriter, r *http.Request) bool {
 func CheckRigths(w http.ResponseWriter, r *http.Request) error {
 	method := r.Method
 
-	session, err := PGStore.Get(r, "session-key")
+	session, err := sstore.PGStore.Get(r, "session-key")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return err
