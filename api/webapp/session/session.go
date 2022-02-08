@@ -4,21 +4,21 @@ import (
 	"fmt"
 	"microseviceAdmin/domain/model"
 	"net/http"
-	"time"
 )
 
 // CheckSession ...
 func CheckSession(w http.ResponseWriter, r *http.Request) {
-	defer sstore.PGStore.StopCleanup(sstore.PGStore.Cleanup(time.Minute * 5))
 
 	session, err := sstore.PGStore.Get(r, "session-key")
+
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	_, ok := session.Values["EmployeeID"]
+
 	if !ok {
-		http.Redirect(w, r, "/admin/login", http.StatusUnauthorized)
+		http.Redirect(w, r, "/admin/login", http.StatusFound)
 		return
 	}
 }
@@ -31,6 +31,8 @@ func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employe
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+	//gob.Register(model.Employee)
+	//session.Values["Employee"] = employee
 	session.Values["EmployeeID"] = employee.EmployeeID
 	position := string(employee.Position)
 	session.Values["Position"] = position
@@ -63,8 +65,15 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 // IsExist ...
 func IsExist(w http.ResponseWriter, r *http.Request) bool {
-	session, _ := sstore.PGStore.Get(r, "session")
+
+	session, err := sstore.PGStore.Get(r, "session-key")
+
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return false
+	}
 	_, ok := session.Values["EmployeeID"]
+
 	return ok
 }
 
