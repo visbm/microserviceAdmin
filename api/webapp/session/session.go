@@ -1,6 +1,7 @@
 package session
 
 import (
+	"encoding/gob"
 	"fmt"
 	"microseviceAdmin/domain/model"
 	"net/http"
@@ -31,8 +32,8 @@ func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employe
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	//gob.Register(model.Employee)
-	//session.Values["Employee"] = employee
+	gob.Register(model.Employee{})
+	session.Values["Employee"] = employee
 	session.Values["EmployeeID"] = employee.EmployeeID
 	position := string(employee.Position)
 	session.Values["Position"] = position
