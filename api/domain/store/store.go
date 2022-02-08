@@ -20,6 +20,9 @@ type Store struct {
 	PetRepository      *PetRepository
 	BookingRepository  *BookingRepository
 	ImageRepository    *ImageRepository
+	PermissionsRepository *PermissionsRepository
+	PermissionsEmployeeRepository *PermissionsEmployeeRepository
+	SessionRepository *SessionRepository
 	Logger             *logger.Logger
 }
 
@@ -51,6 +54,19 @@ func (s *Store) Open() error {
 // Close ...
 func (s *Store) Close() {
 	s.Db.Close()
+}
+
+// SessionRepository ...
+func (s *Store) Session() *SessionRepository {
+	if s.SessionRepository != nil {
+		return s.SessionRepository
+	}
+
+	s.SessionRepository = &SessionRepository{
+		Store: s,
+	}
+
+	return s.SessionRepository
 }
 
 // User ...
@@ -133,6 +149,30 @@ func (s *Store) Booking() *BookingRepository {
 	}
 	return s.BookingRepository
 }
+
+// Permossins ...
+func (s *Store) Permossions() *PermissionsRepository {
+	if s.PermissionsRepository != nil {
+		return s.PermissionsRepository
+	}
+	s.PermissionsRepository = &PermissionsRepository{
+		Store: s,
+	}
+	return s.PermissionsRepository
+}
+
+func (s *Store) PermissionsEmployee() *PermissionsEmployeeRepository {
+	if s.PermissionsEmployeeRepository != nil {
+		return s.PermissionsEmployeeRepository
+	}
+	s.PermissionsEmployeeRepository = &PermissionsEmployeeRepository{
+		Store: s,
+	}
+	return s.PermissionsEmployeeRepository
+}
+
+
+
 
 // Image ...
 func (s *Store) Image() *ImageRepository {

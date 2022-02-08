@@ -29,7 +29,7 @@ func New(config *webapp.Config) *Server {
 func (s *Server) Start() error {
 
 	s.configureRoutes()
-	s.logger.Info("Admin router started successfully")
+	s.logger.Info("Admin router started successfully")	
 
 	if err := s.configureStore(); err != nil {
 		s.logger.Errorf("Error while configure store. ERR MSG: %s", err.Error())

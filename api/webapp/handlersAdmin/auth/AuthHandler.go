@@ -46,7 +46,7 @@ func AuthAdmin(s *store.Store) httprouter.Handle {
 			http.Error(w, "Eror during checking users email or password", 400)
 			return
 		}
-
+		
 		session.AuthSession(w, r, employee)
 
 		http.Redirect(w, r, "/admin/home", http.StatusFound)
