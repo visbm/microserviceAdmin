@@ -101,32 +101,48 @@ func CheckRigths(w http.ResponseWriter, r *http.Request) error {
 	}
 
 	str := fmt.Sprintf("%v", permissions)
-	
+
 	fmt.Println("permissions: ", str)
 	lookFor := "delete_user"
 	contain := strings.Contains(str, lookFor)
-	contain2 := strings.Contains(str, "delete_pet")
+	
 
 	fmt.Println("contain: ", contain)
-	fmt.Println("contain2: ", contain2)
+	
 
 	return nil
 }
 
-/*func GetPermissions(w http.ResponseWriter, r *http.Request) (interface{}, error) {
+
+func CheckRigths2(w http.ResponseWriter, r *http.Request , name string) error {
+
 	session, err := sstore.PGStore.Get(r, "session-key")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return nil, err
+		return err
 	}
-	var permissions interface{}
 
-	permissions, ok := session.Values["Permissions"]
-
+	employee, ok := session.Values["Employee"]
 	if !ok {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return nil, err
+		return fmt.Errorf("no employee in session")
 	}
-	return permissions, nil
+	fmt.Println("employee: ", employee)
+
+	permissions, ok := session.Values["Permissions"]
+	if !ok {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return fmt.Errorf("no permissions in session")
+	}
+
+	str := fmt.Sprintf("%v", permissions)
+
+	fmt.Println("permissions: ", str)	
+	contain := strings.Contains(str, name)
+	if !contain {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return fmt.Errorf("not enough rights")
+	}
+	fmt.Println("contain: ", contain)
+	return nil
 }
-*/
