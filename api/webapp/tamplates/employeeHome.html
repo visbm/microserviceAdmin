@@ -12,28 +12,31 @@
 </head>
 
 <body>
-    <h2>Employees</h2>
-    <form action="/admin/employees">
-        <button>all employees</button>
-    </form>
-</body>
 
-<br><br>
 
-<form action="/admin/employees/id" method="GET">
-    <th>Get employee by id</th>
-    <input type="number" name="id" required><br><br>
-    <button>Get</button>
-</form>
+    <dev>
+        <h2>Employees</h2>
+        <form action="/admin/employees">
+            <button>all employees</button>
+        </form>
+    </dev>
 
-<br><br>
+    <br><br>
 
-<body>
-    <form action="/admin/employees/delete/" method="POST">
-        <th>Delete employee by id</th>
+    <form action="/admin/employees/id" method="GET">
+        <th>Get employee by id</th>
         <input type="number" name="id" required><br><br>
-        <button>Delete</button>
+        <button>Get</button>
     </form>
-</body>
 
+    <br><br>
+
+    <dev>
+        <form action="/admin/employees/delete/" method="POST">
+            <th>Delete employee by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Delete</button>
+        </form>
+    </dev>
+</body>
 {{end}}

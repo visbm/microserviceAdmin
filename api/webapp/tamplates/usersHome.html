@@ -12,38 +12,38 @@
 </head>
 
 
-<body>
+<div>
     <h2>Users</h2>
     <form action="/admin/users">
         <button>all users</button>
     </form>
-</body>
+</div>
 <br><br>
 
-<body>
+<div>
     <form action="/admin/users/id/" method="GET">
         <th>Get user by id</th>
         <input type="number" name="id" min="1" required><br><br>
         <button>Get</button>
     </form>
-</body>
+</div>
 <br><br>
 
-<body>
+<div>
     <form action="/admin/users/delete" method="POST">
         <th>Delete user by id</th>
         <input type="number" name="id" required><br><br>
         <button>Delete</button>
     </form>
-</body>
+</div>
 
 <br><br>
 
 
 
-<body>
+<div>
     <p><a href="/admin/users/csv/" download>Download and Create allusers.csv</a>
-</body>
+</div>
 <html>
 
 <head>
@@ -56,7 +56,7 @@
 <br><br>
 
 
-<body>
+<div>
     <h2>New user</h2>
     <form action="/admin/users/new" method="POST">
         <th>Email</th>
@@ -97,10 +97,10 @@
         <input type="text" name="Photo">
         <button>new</button>
     </form>
-</body>
+</div>
 <br><br>
 
-<body>
+<div>
     <h2>Update user</h2>
     <form action="/admin/users/update" method="POST">
         <th>ID</th>
@@ -141,7 +141,7 @@
         <input type="text" name="Photo">
         <button>update</button>
     </form>
-</body>
+</div>
 
 <br><br>
 

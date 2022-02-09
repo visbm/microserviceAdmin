@@ -12,28 +12,31 @@
 </head>
 
 <body>
-    <h2>Rooms</h2>
-    <form action="/admin/rooms">
-        <button>all rooms</button>
-    </form>
-</body>
 
-<br><br>
 
-<form action="/admin/rooms/id" method="GET">
-    <th>Get room by id</th>
-    <input type="number" name="id" required><br><br>
-    <button>Get</button>
-</form>
+    <div>
+        <h2>Rooms</h2>
+        <form action="/admin/rooms">
+            <button>all rooms</button>
+        </form>
+    </div>
 
-<br><br>
+    <br><br>
 
-<body>
-    <form action="/admin/rooms/delete/" method="POST">
-        <th>Delete room by id</th>
+    <form action="/admin/rooms/id" method="GET">
+        <th>Get room by id</th>
         <input type="number" name="id" required><br><br>
-        <button>Delete</button>
+        <button>Get</button>
     </form>
-</body>
 
+    <br><br>
+
+    <div>
+        <form action="/admin/rooms/delete/" method="POST">
+            <th>Delete room by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Delete</button>
+        </form>
+    </div>
+</body>
 {{end}}

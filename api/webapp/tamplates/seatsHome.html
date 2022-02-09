@@ -11,12 +11,12 @@
     <title>Home</title>
 </head>
 
-<body>
+<div>
     <h2>Seats</h2>
     <form action="/admin/seats">
         <button>all seats</button>
     </form>
-</body>
+</div>
 
 <br><br>
 
@@ -28,12 +28,12 @@
 
 <br><br>
 
-<body>
+<div>
     <form action="/admin/seats/delete/" method="POST">
         <th>Delete seat by id</th>
         <input type="number" name="id" required><br><br>
         <button>Delete</button>
     </form>
-</body>
+</div>
 
 {{end}}
