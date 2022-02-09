@@ -25,6 +25,7 @@ func HomeAdmin(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can not parse template: %v", err)
 			return
 		}
+				
 		err = tmpl.Execute(w, nil)
 		if err != nil {
 			http.Error(w, err.Error(), 400)

@@ -43,11 +43,16 @@ func AuthAdmin(s *store.Store) httprouter.Handle {
 		employee, err := s.Employee().FindByUserID(userID)
 		if err != nil {
 			s.Logger.Errorf("Eror during getting employee. Err msg: %s", err.Error())
-			http.Error(w, "Eror during checking users email or password", 400)
 			return
 		}
-		
-		session.AuthSession(w, r, employee)
+
+		permissions, err := s.Permossions().GetByEmployeeId(employee.EmployeeID)
+		if err != nil {
+			s.Logger.Errorf("Eror during getting permissions. Err msg: %s", err.Error())
+			return
+		}
+
+		session.AuthSession(w, r, employee, permissions)
 
 		http.Redirect(w, r, "/admin/home", http.StatusFound)
 

@@ -20,6 +20,19 @@ func AllBookingsHandler(s *store.Store) httprouter.Handle {
 			return
 		}
 
+		/*permission := model.Permission{
+			PermissionID: 0,
+			Name:         "read_bookings",
+			Descriptoin:  "readbookings",
+		}
+
+		permissions, err := session.GetPermissions(w, r)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		model.Find(permissions, permission)*/
+
 		err = s.Open()
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
