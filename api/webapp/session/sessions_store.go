@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"microseviceAdmin/webapp"
 	"os"
+	"time"
 
 	"github.com/antonlindstrom/pgstore"
 )
@@ -12,9 +13,11 @@ type SessionStore struct {
 	DB      *sql.DB
 	PGStore *pgstore.PGStore
 }
+
 var sstore SessionStore
 
 func OpenSessionStore(c *webapp.Config) error {
+	defer sstore.PGStore.StopCleanup(sstore.PGStore.Cleanup(time.Minute * 5))
 
 	dataSourceName := c.PgDataSource()
 	db, err := sql.Open("postgres", dataSourceName)

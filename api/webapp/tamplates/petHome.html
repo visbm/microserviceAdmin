@@ -12,28 +12,31 @@
 </head>
 
 <body>
-    <h2>Pets</h2>
-    <form action="/admin/pets">
-        <button>all pets</button>
-    </form>
-</body>
 
-<br><br>
 
-<form action="/admin/pets/id" method="GET">
-    <th>Get pet by id</th>
-    <input type="number" name="id" required><br><br>
-    <button>Get</button>
-</form>
+    <div>
+        <h2>Pets</h2>
+        <form action="/admin/pets">
+            <button>all pets</button>
+        </form>
+    </div>
 
-<br><br>
+    <br><br>
 
-<body>
-    <form action="/admin/pets/delete/" method="POST">
-        <th>Delete pet by id</th>
+    <form action="/admin/pets/id" method="GET">
+        <th>Get pet by id</th>
         <input type="number" name="id" required><br><br>
-        <button>Delete</button>
+        <button>Get</button>
     </form>
-</body>
 
+    <br><br>
+
+    <div>
+        <form action="/admin/pets/delete/" method="POST">
+            <th>Delete pet by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Delete</button>
+        </form>
+    </div>
+</body>
 {{end}}

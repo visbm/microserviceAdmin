@@ -6,36 +6,40 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-
-
 <body>
-    <h2>Hotels</h2>
-    <form action="/admin/hotels">
-        <button>all hotels</button>
-    </form>
-</body>
 
-<br><br>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+    </head>
 
-<form action="/admin/hotels/id/" method="GET">
-    <th>Get hotel by id</th>
-    <input type="number" name="id" required><br><br>
-    <button>Get</button>
-</form>
 
-<br><br>
+    <div>
+        <h2>Hotels</h2>
+        <form action="/admin/hotels">
+            <button>all hotels</button>
+        </form>
+    </div>
 
-<body>
-    <form action="/admin/hotels/delete/" method="POST">
-        <th>Delete hotel by id</th>
+    <br><br>
+
+    <form action="/admin/hotels/id/" method="GET">
+        <th>Get hotel by id</th>
         <input type="number" name="id" required><br><br>
-        <button>Delete</button>
+        <button>Get</button>
     </form>
-</body>
 
+    <br><br>
+
+    <div>
+        <form action="/admin/hotels/delete/" method="POST">
+            <th>Delete hotel by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Delete</button>
+        </form>
+    </div>
+
+
+</body>
 
 {{end}}

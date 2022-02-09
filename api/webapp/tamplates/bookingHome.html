@@ -4,69 +4,73 @@
 
 {{define "main"}}
 <!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-</head>
-
-
 
 <body>
-    <h2>Bookings</h2>
-    <form action="/admin/bookings">
-        <button>all bookings</button>
-    </form>
-</body>
 
-<br><br>
 
-<form action="/admin/bookings/id" method="GET">
-    <th>Get booking by id</th>
-    <input type="number" name="id" required><br><br>
-    <button>Get</button>
-</form>
 
-<br><br>
+    <head>
+        <meta charset="UTF-8">
+        <title>Home</title>
+    </head>
 
-<body>
-    <form action="/admin/bookings/delete/" method="POST">
-        <th>Delete booking by id</th>
+
+
+    <div>
+        <h2>Bookings</h2>
+        <form action="/admin/bookings">
+            <button>all bookings</button>
+        </form>
+    </div>
+
+    <br><br>
+
+    <form action="/admin/bookings/id" method="GET">
+        <th>Get booking by id</th>
         <input type="number" name="id" required><br><br>
-        <button>Delete</button>
+        <button>Get</button>
     </form>
-</body>
+
+    <br><br>
+
+    <div>
+        <form action="/admin/bookings/delete/" method="POST">
+            <th>Delete booking by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Delete</button>
+        </form>
+    </div>
 
 
-<body>
-    <h2>New booking</h2>
-    <form action="/admin/bookings/new" method="POST">
-        <th>SeatID</th>
-        <input type="number" name="SeatID" required>
-        <th>PetID</th>
-        <input type="number" name="PetID" required>
-        <th>EmployeeID</th>
-        <input type="number" name="EmployeeID" required>
-        <br><br>
-        <th>Status</th>
-        <input type="radio" name="Status" value="pending" id="Status1" required>
-        <label for="Status1">pending</label>
-        <input type="radio" name="Status" value="in-progress" id="Status2" required>
-        <label for="Status2" required>in-progress</label>
-        <input type="radio" name="Status" value="completed" id="Status3" required>
-        <label for="Status3" required>completed</label>
-        <input type="radio" name="Status" value="cancelled" id="Status4" required>
-        <label for="Status4" required>cancelled</label><br><br>
-        <th>StartDate</th>
-        <input type="Date" name="StartDate" required><br><br>
-        <th>EndDate</th>
-        <input type="Date" name="EndDate" required><br><br>
-        <th>Notes</th>
-        <input type="text" name="Notes">
-        <button>new</button>
-    </form>
+    <div>
+        <h2>New booking</h2>
+        <form action="/admin/bookings/new" method="POST">
+            <th>SeatID</th>
+            <input type="number" name="SeatID" required>
+            <th>PetID</th>
+            <input type="number" name="PetID" required>
+            <th>EmployeeID</th>
+            <input type="number" name="EmployeeID" required>
+            <br><br>
+            <th>Status</th>
+            <input type="radio" name="Status" value="pending" id="Status1" required>
+            <label for="Status1">pending</label>
+            <input type="radio" name="Status" value="in-progress" id="Status2" required>
+            <label for="Status2" required>in-progress</label>
+            <input type="radio" name="Status" value="completed" id="Status3" required>
+            <label for="Status3" required>completed</label>
+            <input type="radio" name="Status" value="cancelled" id="Status4" required>
+            <label for="Status4" required>cancelled</label><br><br>
+            <th>StartDate</th>
+            <input type="Date" name="StartDate" required><br><br>
+            <th>EndDate</th>
+            <input type="Date" name="EndDate" required><br><br>
+            <th>Notes</th>
+            <input type="text" name="Notes">
+            <button>new</button>
+        </form>
+    </div>
+    <br><br>
 </body>
-<br><br>
 
 {{end}}
