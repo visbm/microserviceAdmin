@@ -13,24 +13,28 @@
 
 <body>
 
-
+    {{if .HasPermission "read_employee"}}
     <dev>
         <h2>Employees</h2>
         <form action="/admin/employees">
             <button>all employees</button>
         </form>
     </dev>
+    {{end}}
 
     <br><br>
 
+    {{if .HasPermission "read_employee"}}
     <form action="/admin/employees/id" method="GET">
         <th>Get employee by id</th>
         <input type="number" name="id" required><br><br>
         <button>Get</button>
     </form>
+    {{end}}
 
     <br><br>
 
+    {{if .HasPermission "delete_employee"}}
     <dev>
         <form action="/admin/employees/delete/" method="POST">
             <th>Delete employee by id</th>
@@ -38,5 +42,7 @@
             <button>Delete</button>
         </form>
     </dev>
+    {{end}}
+
 </body>
 {{end}}

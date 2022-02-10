@@ -13,8 +13,8 @@ import (
 
 var permission_delete model.Permission = model.Permission{
 	PermissionID: 0,
-	Name:         "read_uers",
-	Descriptoin:  "ability to read a user"}
+	Name:         "delete_user",
+	Descriptoin:  "ability to delete a user"}
 
 // DeleteUser ...
 func DeleteUser(s *store.Store) httprouter.Handle {

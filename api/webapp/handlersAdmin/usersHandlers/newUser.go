@@ -95,7 +95,7 @@ func NewUser(s *store.Store) httprouter.Handle {
 			return
 		}
 		s.Logger.Info("Creat user with id = %d", u.UserID)
-		http.Redirect(w, r, "admin/homeusers/", http.StatusFound)
+		http.Redirect(w, r, "/admin/homeusers/", http.StatusFound)
 
 	}
 }

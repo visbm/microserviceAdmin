@@ -13,24 +13,30 @@
 
 <body>
 
-
+    {{if .HasPermission "read_rooms"}}
     <div>
         <h2>Rooms</h2>
         <form action="/admin/rooms">
             <button>all rooms</button>
         </form>
     </div>
+    {{end}}
 
     <br><br>
 
-    <form action="/admin/rooms/id" method="GET">
-        <th>Get room by id</th>
-        <input type="number" name="id" required><br><br>
-        <button>Get</button>
-    </form>
+    {{if .HasPermission "read_rooms"}}
+    <div>
+        <form action="/admin/rooms/id" method="GET">
+            <th>Get room by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Get</button>
+        </form>
+    </div>
+    {{end}}
 
     <br><br>
 
+    {{if .HasPermission "delete_rooms"}}
     <div>
         <form action="/admin/rooms/delete/" method="POST">
             <th>Delete room by id</th>
@@ -38,5 +44,7 @@
             <button>Delete</button>
         </form>
     </div>
+    {{end}}
+
 </body>
 {{end}}

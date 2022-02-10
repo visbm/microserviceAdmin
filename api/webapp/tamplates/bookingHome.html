@@ -15,24 +15,28 @@
     </head>
 
 
-
+    {{if .HasPermission "read_bookings"}}
     <div>
         <h2>Bookings</h2>
         <form action="/admin/bookings">
             <button>all bookings</button>
         </form>
     </div>
+    {{end}}
 
     <br><br>
 
+    {{if .HasPermission "read_bookings"}}
     <form action="/admin/bookings/id" method="GET">
         <th>Get booking by id</th>
         <input type="number" name="id" required><br><br>
         <button>Get</button>
     </form>
+    {{end}}
 
     <br><br>
 
+    {{if .HasPermission "delete_bookings"}}
     <div>
         <form action="/admin/bookings/delete/" method="POST">
             <th>Delete booking by id</th>
@@ -40,8 +44,9 @@
             <button>Delete</button>
         </form>
     </div>
+    {{end}}
 
-
+    {{if .HasPermission "creat_bookings"}}
     <div>
         <h2>New booking</h2>
         <form action="/admin/bookings/new" method="POST">
@@ -70,6 +75,7 @@
             <button>new</button>
         </form>
     </div>
+    {{end}}
     <br><br>
 </body>
 

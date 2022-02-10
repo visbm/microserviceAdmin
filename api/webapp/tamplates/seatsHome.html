@@ -6,34 +6,46 @@
 <!DOCTYPE html>
 <html>
 
+
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
 </head>
 
-<div>
-    <h2>Seats</h2>
-    <form action="/admin/seats">
-        <button>all seats</button>
-    </form>
-</div>
+<body>
 
-<br><br>
+    {{if .HasPermission "read_seats"}}
+    <div>
+        <h2>Seats</h2>
+        <form action="/admin/seats">
+            <button>all seats</button>
+        </form>
+    </div>
+    {{end}}
 
-<form action="/admin/seats/id" method="GET">
-    <th>Get seat by id</th>
-    <input type="number" name="id" required><br><br>
-    <button>Get</button>
-</form>
+    <br><br>
 
-<br><br>
+    {{if .HasPermission "read_seats"}}
+    <div>
+        <form action="/admin/seats/id" method="GET">
+            <th>Get seat by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Get</button>
+        </form>
+    </div>
+    {{end}}
 
-<div>
-    <form action="/admin/seats/delete/" method="POST">
-        <th>Delete seat by id</th>
-        <input type="number" name="id" required><br><br>
-        <button>Delete</button>
-    </form>
-</div>
+    <br><br>
 
+    {{if .HasPermission "delete_seats"}}
+    <div>
+        <form action="/admin/seats/delete/" method="POST">
+            <th>Delete seat by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Delete</button>
+        </form>
+    </div>
+    {{end}}
+
+</body>
 {{end}}

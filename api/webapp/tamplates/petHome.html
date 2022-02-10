@@ -13,7 +13,7 @@
 
 <body>
 
-
+    {{if .HasPermission "read_pet"}}
     <div>
         <h2>Pets</h2>
         <form action="/admin/pets">
@@ -23,14 +23,19 @@
 
     <br><br>
 
-    <form action="/admin/pets/id" method="GET">
-        <th>Get pet by id</th>
-        <input type="number" name="id" required><br><br>
-        <button>Get</button>
-    </form>
+    {{if .HasPermission "read_pet"}}
+    <div>
+        <form action="/admin/pets/id" method="GET">
+            <th>Get pet by id</th>
+            <input type="number" name="id" required><br><br>
+            <button>Get</button>
+        </form>
+    </div>
+    {{end}}
 
     <br><br>
 
+    {{if .HasPermission "delete_pet"}}
     <div>
         <form action="/admin/pets/delete/" method="POST">
             <th>Delete pet by id</th>
@@ -38,5 +43,7 @@
             <button>Delete</button>
         </form>
     </div>
+    {{end}}
+
 </body>
 {{end}}
