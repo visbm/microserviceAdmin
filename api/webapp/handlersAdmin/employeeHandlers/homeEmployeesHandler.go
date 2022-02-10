@@ -13,9 +13,9 @@ import (
 func HomeEmployeesHandler(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r)
+		err := session.CheckRigths(w, r, permission_read.Name)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusForbidden)
 			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
 			return
 		}

@@ -79,7 +79,7 @@ func IsExist(w http.ResponseWriter, r *http.Request) bool {
 }
 
 //CheckRigths of employee and return err if not enough rights
-func CheckRigths(w http.ResponseWriter, r *http.Request) error {
+func CheckRigths2(w http.ResponseWriter, r *http.Request) error {
 
 	session, err := sstore.PGStore.Get(r, "session-key")
 	if err != nil {
@@ -114,7 +114,7 @@ func CheckRigths(w http.ResponseWriter, r *http.Request) error {
 }
 
 
-func CheckRigths2(w http.ResponseWriter, r *http.Request , name string) error {
+func CheckRigths(w http.ResponseWriter, r *http.Request , name string) error {
 
 	session, err := sstore.PGStore.Get(r, "session-key")
 	if err != nil {
@@ -122,27 +122,27 @@ func CheckRigths2(w http.ResponseWriter, r *http.Request , name string) error {
 		return err
 	}
 
-	employee, ok := session.Values["Employee"]
+/*	employee, ok := session.Values["Employee"]
 	if !ok {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return fmt.Errorf("no employee in session")
-	}
-	fmt.Println("employee: ", employee)
+	}*/
+	//fmt.Println("employee: ", employee)
 
 	permissions, ok := session.Values["Permissions"]
 	if !ok {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return fmt.Errorf("no permissions in session")
+		err = fmt.Errorf("no permissions in session")
+		return err
 	}
 
 	str := fmt.Sprintf("%v", permissions)
 
-	fmt.Println("permissions: ", str)	
+	//fmt.Println("permissions: ", str)	
 	contain := strings.Contains(str, name)
 	if !contain {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return fmt.Errorf("not enough rights")
+		err = fmt.Errorf("not enough rights")
+		return err
 	}
-	fmt.Println("contain: ", contain)
+	//fmt.Println("contain: ", contain)
 	return nil
 }

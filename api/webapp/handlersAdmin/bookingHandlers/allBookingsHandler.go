@@ -10,39 +10,23 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-var permission model.Permission
+var permission_read model.Permission = model.Permission{
+	PermissionID: 0,
+	Name:         "read_bookings",
+	Descriptoin:  "ability to read a booking"}
 
 // AllBookingsHandler ...
 func AllBookingsHandler(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-		permission.Name = "read_bookings"
+
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r)
+
+		err := session.CheckRigths(w, r, permission_read.Name)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusForbidden)
 			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
 			return
 		}
-
-		err = session.CheckRigths2(w, r, permission.Name)
-		if err != nil {
-			http.Error(w, "Eror during checking users email or password", http.StatusForbidden)
-			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
-			return
-		}
-
-		/*permission := model.Permission{
-			PermissionID: 0,
-			Name:         "read_bookings",
-			Descriptoin:  "readbookings",
-		}
-
-		permissions, err := session.GetPermissions(w, r)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
-			return
-		}
-		model.Find(permissions, permission)*/
 
 		err = s.Open()
 		if err != nil {
