@@ -2,6 +2,7 @@ package usershandlers
 
 import (
 	"log"
+	"microseviceAdmin/domain/model"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
@@ -10,14 +11,19 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var permission_delete model.Permission = model.Permission{
+	PermissionID: 0,
+	Name:         "read_uers",
+	Descriptoin:  "ability to read a user"}
+
 // DeleteUser ...
 func DeleteUser(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r)
+		err := session.CheckRigths(w, r, permission_delete.Name)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusForbidden)
 			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
 			return
 		}

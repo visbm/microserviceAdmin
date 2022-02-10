@@ -11,14 +11,19 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var permission_creat model.Permission = model.Permission{
+	PermissionID: 0,
+	Name:         "creat_user",
+	Descriptoin:  "ability to creat a user"}
+
 // NewUser ...
 func NewUser(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r)
+		err := session.CheckRigths(w, r, permission_creat.Name)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusForbidden)
 			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
 			return
 		}

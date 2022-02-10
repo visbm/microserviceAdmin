@@ -1,6 +1,7 @@
 package bookinghandlers
 
 import (
+	"microseviceAdmin/domain/model"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
@@ -9,13 +10,20 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+var permission_read model.Permission = model.Permission{
+	PermissionID: 0,
+	Name:         "read_bookings",
+	Descriptoin:  "ability to read a booking"}
+
 // AllBookingsHandler ...
 func AllBookingsHandler(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r)
+
+		err := session.CheckRigths(w, r, permission_read.Name)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
+			http.Error(w, err.Error(), http.StatusForbidden)
 			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
 			return
 		}
