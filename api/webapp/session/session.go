@@ -36,7 +36,7 @@ func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employe
 	gob.Register(model.Employee{})
 	session.Values["Employee"] = employee
 	session.Values["EmployeeID"] = employee.EmployeeID
-	session.Values["EmployeePosition"] = employee.Position
+	session.Values["EmployeePosition"] = employee.PositionString()
 
 	gob.Register([]model.Permission{})
 	session.Values["Permissions"] = permissions
@@ -86,6 +86,16 @@ func CheckRigths(w http.ResponseWriter, r *http.Request, name string) error {
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return err
+	}
+
+	position, ok := session.Values["EmployeePosition"]
+	if !ok {
+		err = fmt.Errorf("no permissions in session")
+		return err
+	}
+
+	if position.(string) == "admin" {
+		return nil
 	}
 
 	permissions, ok := session.Values["Permissions"]

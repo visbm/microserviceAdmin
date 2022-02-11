@@ -34,9 +34,9 @@ func (r *PermissionsEmployeeRepository) GetAll(p *model.Permissions_employees) (
 	return &permissions_employees, nil
 }
 
-func (r *PermissionsEmployeeRepository) SetForEmployee(p *model.Permission, e *model.Employee) error {
+func (r *PermissionsEmployeeRepository) SetForEmployee(PermissionID int, employeeID int) error {
 
-	result, err := r.Store.Db.Exec("INSERT INTO permissions_employees (permissions_id, employee_id) VALUES ", p.PermissionID, e.EmployeeID)
+	result, err := r.Store.Db.Exec("INSERT INTO permissions_employees (permissions_id, employee_id) VALUES ($1, $2)", PermissionID, employeeID)
 	if err != nil {
 		log.Print(err)
 		return err

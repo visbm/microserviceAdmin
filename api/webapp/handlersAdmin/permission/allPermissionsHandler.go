@@ -15,8 +15,8 @@ func AllPermissons(s *store.Store) httprouter.Handle {
 		session.CheckSession(w, r)
 		err := session.IsAdmin(w, r)
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
+			http.Error(w, err.Error(), http.StatusForbidden)
+			s.Logger.Errorf("Err msg:%v. ", err)
 			return
 		}
 
@@ -26,7 +26,7 @@ func AllPermissons(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't open DB. Err msg:%v.", err)
 			return
 		}
-		per, err := s.Permossions().GetAll()
+		per, err := s.Permissions().GetAll()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			s.Logger.Errorf("Can't find permissions. Err msg: %v", err)

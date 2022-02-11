@@ -47,7 +47,7 @@ func AuthAdmin(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		permissions, err := s.Permossions().GetByEmployeeId(employee.EmployeeID)
+		permissions, err := s.Permissions().GetByEmployeeId(employee.EmployeeID)
 		if err != nil {
 			http.Error(w, "No such permossions", http.StatusBadRequest)
 			s.Logger.Errorf("Eror during getting permissions. Err msg: %s", err.Error())

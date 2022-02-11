@@ -67,6 +67,8 @@ func (s *Server) configureRoutes() {
 	s.router.Handle("GET", "/admin/permissions", permission.AllPermissons(store.New(s.config)))
 	s.router.Handle("GET", "/admin/permissionsemployee", permission.GetPerByEmplID(store.New(s.config)))
 	s.router.Handle("GET", "/admin/homepermissions", permission.HomePermissions(store.New(s.config)))
+	s.router.Handle("GET", "/admin/addpermissions", permission.ShowAllPermissions(store.New(s.config)))
+	s.router.Handle("POST", "/admin/set", permission.AddPermissionsEmployee(store.New(s.config)))
 
 	s.router.ServeFiles("/templates/*filepath", http.Dir("templates"))
 }

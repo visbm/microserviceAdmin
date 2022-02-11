@@ -26,6 +26,8 @@
         </form>
     </div>
 
+    <br><br>
+
     <div>
         <form action="/admin/permissionsemployee" method="GET">
             <th>Get permissions by employey id</th>
@@ -34,23 +36,17 @@
         </form>
     </div>
 
-
     <br><br>
-    <form action="select" method="POST">
-        <p><select size="20" multiple name="permissions">
-                <option disabled>Permissions</option>
-                <option value="Чебурашка">Чебурашка</option>
-                <option selected value="Крокодил Гена">Крокодил Гена</option>
-                <option value="Шапокляк">Шапокляк</option>
-                <option value="Крыса Лариса">Крыса Лариса</option>
-                <option disabled>Выберите героя</option>
-                <option value="Чебурашка">Чебурашка</option>
-                <option value="Крокодил Гена">Крокодил Гена</option>
-                <option value="Шапокляк">Шапокляк</option>
-                <option value="Крыса Лариса">Крыса Лариса</option>
-            </select></p>
-        <p><input type="submit" value="Submit"></p>
-    </form>
+
+    <div>
+        <form action="/admin/addpermissions" method="GET">
+            <button>Set permissions</button>
+
+        </form>
+    </div>
+
+
+
 
 </body>
 {{end}}
