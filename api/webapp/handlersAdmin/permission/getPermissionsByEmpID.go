@@ -1,6 +1,7 @@
 package permission
 
 import (
+	"fmt"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
@@ -37,6 +38,12 @@ func GetPerByEmplID(s *store.Store) httprouter.Handle {
 
 		per, err := s.Permissions().GetByEmployeeId(id)
 		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			s.Logger.Errorf("Can't find permissions. Err msg: %v", err)
+			return
+		}
+		if len(*per) == 0 {
+			err := fmt.Errorf("no rows in result set")
 			http.Error(w, err.Error(), http.StatusNotFound)
 			s.Logger.Errorf("Can't find permissions. Err msg: %v", err)
 			return

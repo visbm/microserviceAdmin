@@ -21,7 +21,7 @@
         </form>
     </div>
     {{end}}
-    
+
     <br><br>
 
     {{if .HasPermission "read_user"}}
@@ -40,7 +40,7 @@
     <div>
         <form action="/admin/users/delete" method="POST">
             <th>Delete user by id</th>
-            <input type="number" name="id" required><br><br>
+            <input type="number" name="id" min="1" required><br><br>
             <button>Delete</button>
         </form>
     </div>

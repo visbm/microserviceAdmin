@@ -26,7 +26,7 @@
     {{if .HasPermission "read_hotel"}}
     <form action="/admin/hotels/id/" method="GET">
         <th>Get hotel by id</th>
-        <input type="number" name="id" required><br><br>
+        <input type="number" name="id" min="1" required><br><br>
         <button>Get</button>
     </form>
     {{end}}
@@ -36,7 +36,7 @@
     <div>
         <form action="/admin/hotels/delete/" method="POST">
             <th>Delete hotel by id</th>
-            <input type="number" name="id" required><br><br>
+            <input type="number" name="id" min="1" required><br><br>
             <button>Delete</button>
         </form>
     </div>
