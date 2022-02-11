@@ -151,7 +151,7 @@ func (s *Store) Booking() *BookingRepository {
 }
 
 // Permossins ...
-func (s *Store) Permossions() *PermissionsRepository {
+func (s *Store) Permissions() *PermissionsRepository {
 	if s.PermissionsRepository != nil {
 		return s.PermissionsRepository
 	}

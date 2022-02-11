@@ -1,33 +1,22 @@
-package pethandlers
+package permission
 
 import (
-	"microseviceAdmin/domain/model"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
-	"strconv"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-// GetPetByID ...
-func GetPetByID(s *store.Store) httprouter.Handle {
+// AllPermissonHandler ...
+func ShowAllPermissions(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r, permission_read.Name)
+		err := session.CheckRigths(w, r, "admin")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusForbidden)
-			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
-			return
-		}
-
-		pets := []model.Pet{}
-
-		id, err := strconv.Atoi(r.FormValue("id"))
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
+			s.Logger.Errorf(" Err msg:%v. ", err)
 			return
 		}
 
@@ -37,18 +26,15 @@ func GetPetByID(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't open DB. Err msg:%v.", err)
 			return
 		}
-
-		pet, err := s.Pet().FindByID(id)
+		per, err := s.Permissions().GetAll()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
-			s.Logger.Errorf("Cant find pet. Err msg:%v.", err)
+			s.Logger.Errorf("Can't find permissions. Err msg: %v", err)
 			return
 		}
 
-		pets = append(pets, *pet)
-
 		files := []string{
-			"/api/webapp/tamplates/allPets.html",
+			"/api/webapp/tamplates/addPermissionEmployee.html",
 			"/api/webapp/tamplates/base.html",
 		}
 
@@ -59,11 +45,12 @@ func GetPetByID(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		err = tmpl.Execute(w, pets)
+		err = tmpl.Execute(w, per)
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 			s.Logger.Errorf("Can not parse template: %v", err)
 			return
 		}
+
 	}
 }

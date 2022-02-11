@@ -78,6 +78,16 @@
     </div>
     {{end}}
 
+
+    {{if .HasPermission "admin"}}
+    <div>
+        <h2>Permissions</h2>
+        <form action="/admin/homepermissions">
+            <button>permissions</button>
+        </form>
+    </div>
+    {{end}}
+
     <div>
         <h2>Logout</h2>
         <form action="/admin/logout">

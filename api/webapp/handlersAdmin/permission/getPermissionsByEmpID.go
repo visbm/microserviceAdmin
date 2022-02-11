@@ -1,7 +1,6 @@
-package pethandlers
+package permission
 
 import (
-	"microseviceAdmin/domain/model"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
@@ -11,23 +10,14 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// GetPetByID ...
-func GetPetByID(s *store.Store) httprouter.Handle {
+// Get all permissions that the employee has...
+func GetPerByEmplID(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r, permission_read.Name)
+		err := session.CheckRigths(w, r, "admin")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusForbidden)
-			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
-			return
-		}
-
-		pets := []model.Pet{}
-
-		id, err := strconv.Atoi(r.FormValue("id"))
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
+			s.Logger.Errorf(" Err msg:%v. ", err)
 			return
 		}
 
@@ -38,17 +28,22 @@ func GetPetByID(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		pet, err := s.Pet().FindByID(id)
+		id, err := strconv.Atoi(r.FormValue("id"))
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusNotFound)
-			s.Logger.Errorf("Cant find pet. Err msg:%v.", err)
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
 			return
 		}
 
-		pets = append(pets, *pet)
+		per, err := s.Permissions().GetByEmployeeId(id)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusNotFound)
+			s.Logger.Errorf("Can't find permissions. Err msg: %v", err)
+			return
+		}
 
 		files := []string{
-			"/api/webapp/tamplates/allPets.html",
+			"/api/webapp/tamplates/allPermissions.html",
 			"/api/webapp/tamplates/base.html",
 		}
 
@@ -59,11 +54,12 @@ func GetPetByID(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		err = tmpl.Execute(w, pets)
+		err = tmpl.Execute(w, per)
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 			s.Logger.Errorf("Can not parse template: %v", err)
 			return
 		}
+
 	}
 }

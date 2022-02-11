@@ -11,7 +11,7 @@ type PermissionsEmployeeRepository struct {
 	Store *Store
 }
 
-func (r *PermissionsEmployeeRepository) GetAll(p *model.Permissions_employees) (*[]model.Permissions_employees, error) {
+func (r *PermissionsEmployeeRepository) GetAll() (*[]model.Permissions_employees, error) {
 	rows, err := r.Store.Db.Query("SELECT * FROM permissions_employees")
 	if err != nil {
 		log.Print(err)
@@ -22,8 +22,8 @@ func (r *PermissionsEmployeeRepository) GetAll(p *model.Permissions_employees) (
 	for rows.Next() {
 		permission_employees := model.Permissions_employees{}
 		err := rows.Scan(
-			&permission_employees.Permisson,
-			&permission_employees.Employee,
+			&permission_employees.Permissions.PermissionID,
+			&permission_employees.Employee.EmployeeID,
 		)
 		if err != nil {
 			log.Print(err)
@@ -34,9 +34,9 @@ func (r *PermissionsEmployeeRepository) GetAll(p *model.Permissions_employees) (
 	return &permissions_employees, nil
 }
 
-func (r *PermissionsEmployeeRepository) SetForEmployee(p *model.Permission, e *model.Employee) error {
+func (r *PermissionsEmployeeRepository) SetForEmployee(PermissionID int, employeeID int) error {
 
-	result, err := r.Store.Db.Exec("INSERT INTO permissions_employees (permissions_id, employee_id) VALUES ", p.PermissionID, e.EmployeeID)
+	result, err := r.Store.Db.Exec("INSERT INTO permissions_employees (permissions_id, employee_id) VALUES ($1, $2)", PermissionID, employeeID)
 	if err != nil {
 		log.Print(err)
 		return err

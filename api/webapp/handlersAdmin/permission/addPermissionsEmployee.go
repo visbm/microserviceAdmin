@@ -1,8 +1,6 @@
-package pethandlers
+package permission
 
 import (
-	"log"
-	"microseviceAdmin/domain/model"
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
@@ -11,20 +9,14 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-var permission_delete model.Permission = model.Permission{
-	PermissionID: 0,
-	Name:         "delete_pet",
-	Descriptoin:  "ability to delete a pet"}
-
-// DeletePet ...
-func DeletePets(s *store.Store) httprouter.Handle {
+// AllPermissonHandler ...
+func AddPermissionsEmployee(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r, permission_delete.Name)
+		err := session.CheckRigths(w, r, "admin")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusForbidden)
-			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
+			s.Logger.Errorf(" Err msg:%v. ", err)
 			return
 		}
 
@@ -32,7 +24,13 @@ func DeletePets(s *store.Store) httprouter.Handle {
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
 			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
-			http.Redirect(w, r, "/admin/homepets", http.StatusFound)
+			return
+		}
+
+		perID, err := strconv.Atoi(r.FormValue("permissions"))
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
 			return
 		}
 		err = s.Open()
@@ -41,14 +39,14 @@ func DeletePets(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't open DB. Err msg:%v.", err)
 			return
 		}
-		err = s.Pet().Delete(id)
+		err = s.PermissionsEmployee().SetForEmployee(perID, id)
 		if err != nil {
-			log.Print(err)
-			s.Logger.Errorf("Can't delete pet. Err msg:%v.", err)
+			http.Error(w, err.Error(), http.StatusNotFound)
+			s.Logger.Errorf("Can't set permissions. Err msg: %v", err)
 			return
 		}
-		s.Logger.Info("Delete pet with id = %d", id)
-		http.Redirect(w, r, "/admin/homepets", http.StatusFound)
+		
+		http.Redirect(w, r, "/admin/homepermissions", http.StatusFound)
 
 	}
 }
