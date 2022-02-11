@@ -28,7 +28,7 @@
     <div>
         <form action="/admin/rooms/id" method="GET">
             <th>Get room by id</th>
-            <input type="number" name="id" required><br><br>
+            <input type="number" name="id" min="1" required><br><br>
             <button>Get</button>
         </form>
     </div>
@@ -40,7 +40,7 @@
     <div>
         <form action="/admin/rooms/delete/" method="POST">
             <th>Delete room by id</th>
-            <input type="number" name="id" required><br><br>
+            <input type="number" name="id" min="1" required><br><br>
             <button>Delete</button>
         </form>
     </div>

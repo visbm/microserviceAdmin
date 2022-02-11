@@ -27,7 +27,7 @@
     {{if .HasPermission "read_employee"}}
     <form action="/admin/employees/id" method="GET">
         <th>Get employee by id</th>
-        <input type="number" name="id" required><br><br>
+        <input type="number" name="id" min="1" required><br><br>
         <button>Get</button>
     </form>
     {{end}}
@@ -38,7 +38,7 @@
     <div>
         <form action="/admin/employees/delete/" method="POST">
             <th>Delete employee by id</th>
-            <input type="number" name="id" required><br><br>
+            <input type="number" name="id" min="1" required><br><br>
             <button>Delete</button>
         </form>
     </div>

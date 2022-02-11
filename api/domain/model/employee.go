@@ -8,7 +8,6 @@ type Employee struct {
 	User
 	Hotel    Hotel
 	Position Position `json:"position"`
-	Employee []Permission
 }
 
 // Position ...
@@ -21,7 +20,6 @@ const (
 	OwnerPosition    Position = "owner"
 	AdminPosition    Position = "admin"
 )
-
 
 func (e Employee) PositionString() string {
 	switch e.Position {

@@ -29,7 +29,7 @@
     <div>
         <form action="/admin/seats/id" method="GET">
             <th>Get seat by id</th>
-            <input type="number" name="id" required><br><br>
+            <input type="number" name="id" min="1" required><br><br>
             <button>Get</button>
         </form>
     </div>
@@ -41,7 +41,7 @@
     <div>
         <form action="/admin/seats/delete/" method="POST">
             <th>Delete seat by id</th>
-            <input type="number" name="id" required><br><br>
+            <input type="number" name="id" min="1" required><br><br>
             <button>Delete</button>
         </form>
     </div>

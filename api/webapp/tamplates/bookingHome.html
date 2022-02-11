@@ -29,7 +29,7 @@
     {{if .HasPermission "read_bookings"}}
     <form action="/admin/bookings/id" method="GET">
         <th>Get booking by id</th>
-        <input type="number" name="id" required><br><br>
+        <input type="number" name="id" min="1" required><br><br>
         <button>Get</button>
     </form>
     {{end}}
@@ -40,7 +40,7 @@
     <div>
         <form action="/admin/bookings/delete/" method="POST">
             <th>Delete booking by id</th>
-            <input type="number" name="id" required><br><br>
+            <input type="number" name="id" min="1" required><br><br>
             <button>Delete</button>
         </form>
     </div>
