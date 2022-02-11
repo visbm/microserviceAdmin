@@ -15,7 +15,7 @@ import (
 func GetPetByID(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
-		err := session.CheckRigths(w, r , permission_read.Name)
+		err := session.CheckRigths(w, r, permission_read.Name)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusForbidden)
 			s.Logger.Errorf("Bad request. Err msg:%v. ", err)
@@ -27,7 +27,7 @@ func GetPetByID(s *store.Store) httprouter.Handle {
 		id, err := strconv.Atoi(r.FormValue("id"))
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, ps.ByName("id"))
+			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
 			return
 		}
 

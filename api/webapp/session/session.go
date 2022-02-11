@@ -36,6 +36,7 @@ func AuthSession(w http.ResponseWriter, r *http.Request, employee *model.Employe
 	gob.Register(model.Employee{})
 	session.Values["Employee"] = employee
 	session.Values["EmployeeID"] = employee.EmployeeID
+	session.Values["EmployeePosition"] = employee.Position
 
 	gob.Register([]model.Permission{})
 	session.Values["Permissions"] = permissions
@@ -79,39 +80,6 @@ func IsExist(w http.ResponseWriter, r *http.Request) bool {
 }
 
 //CheckRigths of employee and return err if not enough rights
-func CheckRigths2(w http.ResponseWriter, r *http.Request) error {
-
-	session, err := sstore.PGStore.Get(r, "session-key")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return err
-	}
-
-	employee, ok := session.Values["Employee"]
-	if !ok {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return fmt.Errorf("no employee in session")
-	}
-	fmt.Println("employee: ", employee)
-
-	permissions, ok := session.Values["Permissions"]
-	if !ok {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return fmt.Errorf("no permissions in session")
-	}
-
-	str := fmt.Sprintf("%v", permissions)
-
-	fmt.Println("permissions: ", str)
-	lookFor := "delete_user"
-	contain := strings.Contains(str, lookFor)
-
-	fmt.Println("contain: ", contain)
-
-	return nil
-}
-
-//CheckRigths of employee and return err if not enough rights
 func CheckRigths(w http.ResponseWriter, r *http.Request, name string) error {
 
 	session, err := sstore.PGStore.Get(r, "session-key")
@@ -133,5 +101,27 @@ func CheckRigths(w http.ResponseWriter, r *http.Request, name string) error {
 		err = fmt.Errorf("not enough rights")
 		return err
 	}
+	return nil
+}
+
+func IsAdmin(w http.ResponseWriter, r *http.Request) error {
+
+	session, err := sstore.PGStore.Get(r, "session-key")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return err
+	}
+
+	position, ok := session.Values["EmployeePosition"]
+	if !ok {
+		err = fmt.Errorf("no permissions in session")
+		return err
+	}
+
+	if position.(string) != "admin" {
+		err = fmt.Errorf("you are not admin")
+		return err
+	}
+
 	return nil
 }

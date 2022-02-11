@@ -4,13 +4,14 @@ import (
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
+	"strconv"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-// AllPermissonHandler ...
-func AllPermissons(s *store.Store) httprouter.Handle {
+// Get all permissions that the employee has...
+func GetPerByEmplID(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
 		err := session.IsAdmin(w, r)
@@ -26,7 +27,15 @@ func AllPermissons(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't open DB. Err msg:%v.", err)
 			return
 		}
-		per, err := s.Permossions().GetAll()
+
+		id, err := strconv.Atoi(r.FormValue("id"))
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
+			return
+		}
+
+		per, err := s.Permossions().GetByEmployeeId(id)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			s.Logger.Errorf("Can't find permissions. Err msg: %v", err)

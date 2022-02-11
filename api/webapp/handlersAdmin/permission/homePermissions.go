@@ -9,8 +9,8 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// AllPermissonHandler ...
-func AllPermissons(s *store.Store) httprouter.Handle {
+// HomePetsHandler ...
+func HomePermissions(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
 		err := session.IsAdmin(w, r)
@@ -20,21 +20,8 @@ func AllPermissons(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		err = s.Open()
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			s.Logger.Errorf("Can't open DB. Err msg:%v.", err)
-			return
-		}
-		per, err := s.Permossions().GetAll()
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusNotFound)
-			s.Logger.Errorf("Can't find permissions. Err msg: %v", err)
-			return
-		}
-
 		files := []string{
-			"/api/webapp/tamplates/allPermissions.html",
+			"/api/webapp/tamplates/permissionsHome.html",
 			"/api/webapp/tamplates/base.html",
 		}
 
@@ -45,12 +32,11 @@ func AllPermissons(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		err = tmpl.Execute(w, per)
+		err = tmpl.Execute(w, nil)
 		if err != nil {
 			http.Error(w, err.Error(), 400)
 			s.Logger.Errorf("Can not parse template: %v", err)
 			return
 		}
-
 	}
 }
