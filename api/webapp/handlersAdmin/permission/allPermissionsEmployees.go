@@ -4,14 +4,13 @@ import (
 	"microseviceAdmin/domain/store"
 	"microseviceAdmin/webapp/session"
 	"net/http"
-	"strconv"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-// Get all permissions that the employee has...
-func GetPerByEmplID(s *store.Store) httprouter.Handle {
+// AllPermissonHandler ...
+func AllPermissionsEmployees(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
 		err := session.CheckRigths(w, r, "admin")
@@ -27,15 +26,7 @@ func GetPerByEmplID(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't open DB. Err msg:%v.", err)
 			return
 		}
-
-		id, err := strconv.Atoi(r.FormValue("id"))
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
-			return
-		}
-
-		per, err := s.Permissions().GetByEmployeeId(id)
+		per, err := s.PermissionsEmployee().GetAll()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			s.Logger.Errorf("Can't find permissions. Err msg: %v", err)
@@ -43,7 +34,7 @@ func GetPerByEmplID(s *store.Store) httprouter.Handle {
 		}
 
 		files := []string{
-			"/api/webapp/tamplates/allPermissions.html",
+			"/api/webapp/tamplates/allPermissionsEmployee.html",
 			"/api/webapp/tamplates/base.html",
 		}
 

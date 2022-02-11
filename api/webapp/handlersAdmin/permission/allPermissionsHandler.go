@@ -13,10 +13,10 @@ import (
 func AllPermissons(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
-		err := session.IsAdmin(w, r)
+		err := session.CheckRigths(w, r, "admin")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusForbidden)
-			s.Logger.Errorf("Err msg:%v. ", err)
+			s.Logger.Errorf(" Err msg:%v. ", err)
 			return
 		}
 
