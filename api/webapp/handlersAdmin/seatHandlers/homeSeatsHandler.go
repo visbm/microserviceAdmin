@@ -2,22 +2,13 @@ package seathandlers
 
 import (
 	"microseviceAdmin/domain/store"
+	viewdata "microseviceAdmin/pkg/csv/viewData"
 	"microseviceAdmin/webapp/session"
 	"net/http"
 	"text/template"
 
 	"github.com/julienschmidt/httprouter"
 )
-
-type ViewData struct {
-	w http.ResponseWriter
-	r *http.Request
-}
-
-func (vd ViewData) HasPermission(name string) bool {
-	err := session.CheckRigths(vd.w, vd.r, name)
-	return err == nil
-}
 
 // HomeSeatsHandler ...
 func HomeSeatsHandler(s *store.Store) httprouter.Handle {
@@ -30,9 +21,9 @@ func HomeSeatsHandler(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		vd := ViewData{
-			w: w,
-			r: r,
+		vd := viewdata.ViewData{
+			ResponseWriter: w,
+			Request:        r,
 		}
 
 		files := []string{
