@@ -3,21 +3,12 @@ package auth
 import (
 	"html/template"
 	"microseviceAdmin/domain/store"
+	viewdata "microseviceAdmin/pkg/csv/viewData"
 	"microseviceAdmin/webapp/session"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
 )
-
-type ViewData struct {
-	w http.ResponseWriter
-	r *http.Request
-}
-
-func (vd ViewData) HasPermission(name string) bool {
-	err := session.CheckRigths(vd.w, vd.r, name)
-	return err == nil
-}
 
 // HomeAdmin ...
 func HomeAdmin(s *store.Store) httprouter.Handle {
@@ -25,9 +16,10 @@ func HomeAdmin(s *store.Store) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		session.CheckSession(w, r)
 
-		vd := ViewData{
-			w: w,
-			r: r}
+		vd := viewdata.ViewData{
+			ResponseWriter: w,
+			Request: r,
+		}
 
 		files := []string{
 			"/api/webapp/tamplates/homeAdmin.html",
