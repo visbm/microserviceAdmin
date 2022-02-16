@@ -14,10 +14,11 @@ type SeatRepository struct {
 func (r *SeatRepository) Create(s *model.Seat) (*model.Seat, error) {
 	if err := r.Store.Db.QueryRow(
 		"INSERT INTO seat",
-		"(room_id, is_free, description)",
-		"VALUES ($1, $2, $3) RETURNING id",
+		"(room_id, rent_from, rent_to, description)",
+		"VALUES ($1, $2, $3, $4) RETURNING id",
 		s.Room.RoomID,
-		s.IsFree,
+		s.RentFrom,
+		s.RentTo,
 		s.Description,
 	).Scan(&s.SeatID); err != nil {
 		log.Print(err)
@@ -39,8 +40,9 @@ func (r *SeatRepository) GetAll() (*[]model.Seat, error) {
 		err := rows.Scan(
 			&seat.SeatID,
 			&seat.Room.RoomID,
-			&seat.IsFree,
 			&seat.Description,
+			&seat.RentFrom,
+			&seat.RentTo,
 		)
 		if err != nil {
 			log.Print(err)
@@ -58,8 +60,9 @@ func (r *SeatRepository) FindByID(id int) (*model.Seat, error) {
 		id).Scan(
 		&seat.SeatID,
 		&seat.Room.RoomID,
-		&seat.IsFree,
 		&seat.Description,
+		&seat.RentFrom,
+		&seat.RentTo,
 	); err != nil {
 		log.Printf(err.Error())
 		return nil, err
@@ -83,10 +86,11 @@ func (r *SeatRepository) Update(s *model.Seat) error {
 
 	result, err := r.Store.Db.Exec(
 		"UPDATE seat SET",
-		"room_id = $1, is_free = $2, description = $3",
-		"WHERE id = $4",
+		"room_id = $1, rent_from = $2, rent_to = $3, description = $",
+		"WHERE id = $5",
 		s.Room.RoomID,
-		s.IsFree,
+		s.RentFrom,
+		s.RentTo,
 		s.Description,
 		s.SeatID,
 	)
