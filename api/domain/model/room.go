@@ -13,9 +13,17 @@ type Room struct {
 	RoomPhotoURL string `json:"roomPhotoUrl"`
 }
 
+type RoomDTO struct {
+	RoomID       int     `json:"roomId"`
+	RoomNumber   int     `json:"roomNum"`
+	PetType      PetType `json:"petType"`
+	HotelID      int     `json:"hotelID"`
+	RoomPhotoURL string  `json:"roomPhotoUrl"`
+}
+
 // Validate ...
 func (r *Room) Validate() error {
-	
+
 	return validation.ValidateStruct(
 		r,
 		validation.Field(&r.RoomNumber, validation.Required, validation.Min(1), validation.Max(999999999999)),
