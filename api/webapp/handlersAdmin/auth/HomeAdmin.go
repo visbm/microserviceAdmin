@@ -3,7 +3,7 @@ package auth
 import (
 	"html/template"
 	"microseviceAdmin/domain/store"
-	viewdata "microseviceAdmin/pkg/csv/viewData"
+	viewdata "microseviceAdmin/pkg/viewData"
 	"microseviceAdmin/webapp/session"
 	"net/http"
 
@@ -18,7 +18,7 @@ func HomeAdmin(s *store.Store) httprouter.Handle {
 
 		vd := viewdata.ViewData{
 			ResponseWriter: w,
-			Request: r,
+			Request:        r,
 		}
 
 		files := []string{

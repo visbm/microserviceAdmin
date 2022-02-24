@@ -2,7 +2,7 @@ package pethandlers
 
 import (
 	"microseviceAdmin/domain/store"
-	viewdata "microseviceAdmin/pkg/csv/viewData"
+	viewdata "microseviceAdmin/pkg/viewData"
 	"microseviceAdmin/webapp/session"
 	"net/http"
 	"text/template"
