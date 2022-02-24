@@ -58,6 +58,7 @@ func (s *Server) configureRoutes() {
 	s.router.Handle("GET", "/admin/bookings/id", bookinghandlers.GetBookingByID(store.New(s.config)))
 	s.router.Handle("POST", "/admin/bookings/delete", bookinghandlers.DeleteBooking(store.New(s.config)))
 	s.router.Handle("POST", "/admin/bookings/new", bookinghandlers.NewBooking(store.New(s.config)))
+	s.router.Handle("POST", "/admin/bookings/update", bookinghandlers.UpdateBooking(store.New(s.config)))
 
 	s.router.Handle("GET", "/admin/homeemployees", employeehandlers.HomeEmployeesHandler(store.New(s.config)))
 	s.router.Handle("GET", "/admin/employees", employeehandlers.AllEmployeeHandler(store.New(s.config)))

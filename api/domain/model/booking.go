@@ -16,6 +16,7 @@ type Booking struct {
 	StartDate time.Time     `json:"start"`
 	EndDate   time.Time     `json:"end"`
 	Notes     string        `json:"notes"`
+	Paid      bool          `json:"paid"`
 }
 
 // BookingStatus ...
@@ -38,5 +39,6 @@ func (b *Booking) Validate() error {
 		validation.Field(&b.Status, validation.Required, validation.By(IsBookingStatus)),
 		validation.Field(&b.StartDate, validation.Required),
 		validation.Field(&b.EndDate, validation.Required),
+		validation.Field(&b.Paid, validation.NotNil),
 	)
 }

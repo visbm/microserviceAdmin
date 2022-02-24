@@ -8,10 +8,7 @@
 `migrate -path ./migrations -database 'postgres://user:userpass@0.0.0.0:8081/adminDB?sslmode=disable' force 1 `
 
 4. add migr files
-`migrate create -ext sql -dir migrations -seq update_seats `
+`migrate create -ext sql -dir migrations -seq update_booking `
 
 5. Copy file from container:
 `docker cp microserviceadmin_microseviceadmin_1:api/pkg/csv/allusers.csv files`
-
-
-`docker cp microservices_microseviceadmin_1:api/pkg/csv/allusers.csv files`   - rabota

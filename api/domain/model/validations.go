@@ -76,19 +76,16 @@ func IsSex(value interface{}) error {
 	return errors.New("allowed genders: 'male', 'female'")
 }
 
-
 // IsPetType checks if string matchs to a Pet types of Pets
 // PetTypeCat = "cat"
 // PetTypeDog = "dog"
 func IsPetType(value interface{}) error {
 	s := value.(PetType)
-	if s == "cat" || s == "dog" {
+	if s == PetTypeCat || s == PetTypeDog {
 		return nil
 	}
 	return errors.New("allowed pet types: 'PetTypeCat', 'PetTypeDog'")
 }
-
-
 
 // IsEmployeePosition checks if string matchs to a Employee Position
 //	ManagerPosition  Position = "manager"
@@ -110,7 +107,7 @@ func IsEmployeePosition(value interface{}) error {
 //	BookingStatusCancelled  BookingStatus = "cancelled"
 func IsBookingStatus(value interface{}) error {
 	s := value.(BookingStatus)
-	if s == "pending" || s == "in-progress" || s == "completed" || s == "cancelled" {
+	if s == BookingStatusPending || s == BookingStatusInProgress || s == BookingStatusCompleted || s == BookingStatusCancelled {
 		return nil
 	}
 	return errors.New("allowed Booking Status: 'BookingStatusPending', 'BookingStatusInProgress' ,'BookingStatusCompleted','BookingStatusCancelled'")
