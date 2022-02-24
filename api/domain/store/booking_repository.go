@@ -95,8 +95,7 @@ func (r *BookingRepository) Delete(id int) error {
 func (r *BookingRepository) Update(b *model.Booking) error {
 
 	result, err := r.Store.Db.Exec(
-		"UPDATE booking SET",
-		"seat_id = $1, pet_id = $2, employee_id = $3, status = $4, start_date = $5, end_date = $6, notes = $7, paid = $8 WHERE id = $8",
+		"UPDATE booking SET seat_id = $1, pet_id = $2, employee_id = $3, status = $4, start_date = $5, end_date = $6, notes = $7, paid = $8 WHERE id = $9",
 		b.Seat.SeatID,
 		b.Pet.PetID,
 		b.Employee.EmployeeID,

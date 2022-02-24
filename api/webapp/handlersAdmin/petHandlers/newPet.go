@@ -51,7 +51,7 @@ func NewPet(s *store.Store) httprouter.Handle {
 
 		petType := r.FormValue("PetType")
 
-		weight, err := strconv.ParseFloat(r.FormValue("Weight"), 32)
+		weight, err := strconv.ParseFloat(r.FormValue("Weight"), 2)
 
 		diseases := r.FormValue("Diseases")
 		
@@ -81,7 +81,7 @@ func NewPet(s *store.Store) httprouter.Handle {
 			return
 		}
 		s.Logger.Info("Creat pet with id = %d", pet.PetID)
-		http.Redirect(w, r, "/admin/homerooms/", http.StatusFound)
+		http.Redirect(w, r, "/admin/homepets/", http.StatusFound)
 	}
 
 }

@@ -13,9 +13,7 @@ type SeatRepository struct {
 // Create seat and save it to DB
 func (r *SeatRepository) Create(s *model.Seat) (*model.Seat, error) {
 	if err := r.Store.Db.QueryRow(
-		"INSERT INTO seat",
-		"(room_id, rent_from, rent_to, description)",
-		"VALUES ($1, $2, $3, $4) RETURNING id",
+		"INSERT INTO seat (room_id, rent_from, rent_to, description) VALUES ($1, $2, $3, $4) RETURNING id",
 		s.Room.RoomID,
 		s.RentFrom,
 		s.RentTo,

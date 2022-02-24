@@ -1,8 +1,8 @@
 version: '3.9'
 
 services:
-    postgresql_database:
-        container_name: postgresql_database
+    admindatabase:
+        container_name: admindatabase
         image: postgres:latest
         env_file:
             - .env
@@ -56,13 +56,13 @@ services:
                 "-path",
                 "/migrations",
                 "-database",
-                "postgres://user:userpass@postgresql_database:5432/adminDB?sslmode=disable",
+                "postgres://user:userpass@admindatabase:5432/adminDB?sslmode=disable",
                 "up"
             ]
         links:
-            - postgresql_database
+            - admindatabase
         depends_on:
-            - postgresql_database
+            - admindatabase
 
     test-migrate:
         image: migrate/migrate
@@ -105,7 +105,7 @@ services:
         ports:
             - 8080:8080
         depends_on:
-            - postgresql_database
+            - admindatabase
         env_file:
             - .env
         environment:

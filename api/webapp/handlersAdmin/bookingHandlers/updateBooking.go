@@ -28,10 +28,10 @@ func UpdateBooking(s *store.Store) httprouter.Handle {
 			return
 		}
 
-		id, err := strconv.Atoi(r.FormValue("id"))
+		id, err := strconv.Atoi(r.FormValue("BookingID"))
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("id"))
+			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("BookingID"))
 			return
 		}
 
@@ -49,52 +49,44 @@ func UpdateBooking(s *store.Store) httprouter.Handle {
 
 		seatID, err := strconv.Atoi(r.FormValue("SeatID"))
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, ps.ByName("id"))
-			return
-		}
-
-		if seatID != 0 {
-			seat, err := s.Seat().FindByID(seatID)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusNotFound)
-				s.Logger.Errorf("Cant find seat. Err msg:%v.", err)
-				return
+			if seatID != 0 {
+				seat, err := s.Seat().FindByID(seatID)
+				if err != nil {
+					http.Error(w, err.Error(), http.StatusNotFound)
+					s.Logger.Errorf("Cant find seat. Err msg:%v.", err)
+					return
+				}
+				b.Seat = *seat
 			}
-			b.Seat = *seat
+
 		}
 
 		petID, err := strconv.Atoi(r.FormValue("PetID"))
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, ps.ByName("id"))
-			return
-		}
-		if petID != 0 {
-			pet, err := s.Pet().FindByID(petID)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusNotFound)
-				s.Logger.Errorf("Cant find pet. Err msg:%v.", err)
-				return
+			if petID != 0 {
+				pet, err := s.Pet().FindByID(petID)
+				if err != nil {
+					http.Error(w, err.Error(), http.StatusNotFound)
+					s.Logger.Errorf("Cant find pet. Err msg:%v.", err)
+					return
+				}
+				b.Pet = *pet
 			}
-			b.Pet = *pet
+
 		}
 
 		employeeID, err := strconv.Atoi(r.FormValue("EmployeeID"))
 		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, ps.ByName("id"))
-			return
-		}
-
-		if employeeID != 0 {
-			employee, err := s.Employee().FindByID(employeeID)
-			if err != nil {
-				http.Error(w, err.Error(), http.StatusNotFound)
-				s.Logger.Errorf("Cant find employee. Err msg:%v.", err)
-				return
+			if employeeID != 0 {
+				employee, err := s.Employee().FindByID(employeeID)
+				if err != nil {
+					http.Error(w, err.Error(), http.StatusNotFound)
+					s.Logger.Errorf("Cant find employee. Err msg:%v.", err)
+					return
+				}
+				b.Employee = *employee
 			}
-			b.Employee = *employee
+
 		}
 
 		status := r.FormValue("Status")
@@ -105,7 +97,7 @@ func UpdateBooking(s *store.Store) httprouter.Handle {
 		layout := "2006-01-02"
 		startDate := r.FormValue("StartDate")
 		if startDate != "" {
-			startDate, err := time.Parse(layout, r.FormValue("startDate"))
+			startDate, err := time.Parse(layout, r.FormValue("StartDate"))
 			if err != nil {
 				w.WriteHeader(http.StatusBadRequest)
 				s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("StartDate"))
@@ -157,11 +149,11 @@ func UpdateBooking(s *store.Store) httprouter.Handle {
 		err = s.Booking().Update(b)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
-			s.Logger.Errorf("Can't update user. Err msg:%v.", err)
+			s.Logger.Errorf("Can't update booking. Err msg:%v.", err)
 			return
 		}
 		s.Logger.Info("Update user with id = %d", b.BookingID)
-		http.Redirect(w, r, "/admin/homeusers", http.StatusFound)
+		http.Redirect(w, r, "/admin/homebookings", http.StatusFound)
 
 	}
 }
