@@ -63,6 +63,15 @@ func TestBooking_Validate(t *testing.T) {
 				return b
 			},
 			isValid: true,
+		},{
+			name: "valid paid",
+			b: func() *model.Booking {
+
+				b := model.TestBooking()
+				b.Paid = false
+				return b
+			},
+			isValid: true,
 		},
 	}
 

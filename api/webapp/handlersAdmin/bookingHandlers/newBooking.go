@@ -86,6 +86,13 @@ func NewBooking(s *store.Store) httprouter.Handle {
 		}
 		notes := r.FormValue("Notes")
 
+		paid, err := strconv.ParseBool(r.FormValue("Paid"))
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("Verified"))
+			return
+		}
+
 		b := model.Booking{
 			BookingID: 0,
 			Seat:      *seat,
@@ -95,6 +102,7 @@ func NewBooking(s *store.Store) httprouter.Handle {
 			StartDate: startDate,
 			EndDate:   endDate,
 			Notes:     notes,
+			Paid:      paid,
 		}
 
 		err = b.Validate()

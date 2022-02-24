@@ -17,6 +17,7 @@
         <th>StartDate</th>
         <th>EndDate</th>
         <th>Notes</th>
+        <th>Paid</th>
 
         {{range . }}
         <tr>
@@ -28,6 +29,7 @@
             <td>{{.StartDate}}</td>
             <td>{{.EndDate}}</td>
             <td>{{.Notes}}</td>
+            <td>{{.Paid}}</td>
 
         </tr>
         {{end}}
