@@ -6,7 +6,6 @@ import (
 	"microseviceAdmin/webapp/session"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -34,58 +33,51 @@ func NewRoom(s *store.Store) httprouter.Handle {
 			s.Logger.Errorf("Can't open DB. Err msg:%v.", err)
 		}
 
-		roomID, err := strconv.Atoi(r.FormValue("RoomID"))
+		roomNumber, err := strconv.Atoi(r.FormValue("RoomNumber"))
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("RoomID"))
+			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("RoomNumber"))
+			return
+		}
+		petType := r.FormValue("PetType")
+
+		hotelID, err := strconv.Atoi(r.FormValue("HotelID"))
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("HotelID"))
 			return
 		}
 
-		room, err := s.Room().FindByID(roomID)
+		hotel, err := s.Hotel().FindByID(hotelID)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusNotFound)
 			s.Logger.Errorf("Cant find hotel. Err msg:%v.", err)
 			return
 		}
+		photo := r.FormValue("Photo")
 
-		description := r.FormValue("Description")
-
-		layout := "2006-01-02"
-		rentFrom, err := time.Parse(layout, r.FormValue("RentFrom"))
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("RentFrom"))
-			return
+		room := model.Room{
+			RoomID:       0,
+			RoomNumber:   roomNumber,
+			PetType:      model.PetType(petType),
+			Hotel:        *hotel,
+			RoomPhotoURL: photo,
 		}
 
-		rentTo, err := time.Parse(layout, r.FormValue("RentTo"))
-		if err != nil {
-			w.WriteHeader(http.StatusBadRequest)
-			s.Logger.Errorf("Bad request. Err msg:%v. Requests body: %v", err, r.FormValue("RentTo"))
-			return
-		}
-		seat := model.Seat{
-			SeatID:      0,
-			Room:        *room,
-			Description: description,
-			RentFrom:    rentFrom,
-			RentTo:      rentTo,
-		}
-
-		err = seat.Validate()
+		err = room.Validate()
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			s.Logger.Errorf("Data is not valid. Err msg:%v.", err)
 			return
 		}
 
-		_, err = s.Seat().Create(&seat)
+		_, err = s.Room().Create(&room)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
-			s.Logger.Errorf("Can't create seat. Err msg:%v.", err)
+			s.Logger.Errorf("Can't create room. Err msg:%v.", err)
 			return
 		}
-		s.Logger.Info("Creat seat with id = %d", seat.SeatID)
+		s.Logger.Info("Creat room with id = %d", room.RoomID)
 		http.Redirect(w, r, "/admin/homerooms/", http.StatusFound)
 	}
 
